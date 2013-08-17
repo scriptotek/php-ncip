@@ -1,0 +1,25 @@
+{
+    "name": "danmichaelo/ncip",
+    "type": "library",
+    "description": "Basic NCIP library",
+    "homepage": "http://github.com/danmichaelo/ncip",
+    "keywords": ["ncip"],
+    "authors": [
+        {
+            "name": "Dan Michael O. Heggø",
+            "email": "danmichaelo@gmail.com"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=5.0.1",
+        "danmichaelo/customxmlelement": ">=0.1.1",
+        "illuminate/support": "4.1.*@dev"
+    },
+    "autoload": {
+        "psr-0": {
+            "Danmichaelo\\NCIP": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
