@@ -8,6 +8,8 @@
 
 namespace Danmichaelo\Ncip;
 
+use Danmichaelo\CustomXMLElement\CustomXMLElement;
+
 class Ncip {
 
 	protected $url;
