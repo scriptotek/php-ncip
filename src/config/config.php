@@ -24,6 +24,17 @@ return array(
 	|
 	*/
 
-	'agency_id' => ''
+	'agency_id' => '',
+
+	/*
+	|--------------------------------------------------------------------------
+	| User Agent
+	|--------------------------------------------------------------------------
+	|
+	| The user agent string to use when communicating with the NCIP endpoint.
+	|
+	*/
+
+	'user_agent' => null
 
 );
