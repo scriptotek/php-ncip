@@ -10,6 +10,18 @@ namespace Danmichaelo\Ncip;
 
 use Danmichaelo\CustomXMLElement\CustomXMLElement;
 
+class Config {
+
+	static function get($key) {
+		if (class_exists('\Config')) {
+			return \Config::get($key);			
+		} else {
+			return null;
+		}
+	}
+
+}
+
 class Ncip {
 
 	protected $url;
@@ -24,19 +36,20 @@ class Ncip {
 	 * @param  array   $options
 	 * @return void
 	 */
-	public function __construct($url, $agency_id, $options = array())
+	public function __construct($options = array())
 	{
-		$this->url = $url;
+		$this->url = array_get($options, 'url', Config::get('ncip::url'));
+
+		$this->agency_id = array_get($options, 'agency_id', Config::get('ncip::agency_id'));
 
 		// http://laravel.com/api/function-array_get.html
 		// Illuminate/Support/helpers.php
 
-		$this->user_agent = array_get($options, 'user_agent', null);
+		$this->user_agent = array_get($options, 'user_agent', Config::get('ncip::user_agent'));
 
 		$this->namespaces = array_get($options, 'namespaces', 
 			array('ns1' => 'http://www.niso.org/2008/ncip'));
 
-		$this->agency_id = $agency_id;
 	}
 
 	/**
@@ -47,6 +60,7 @@ class Ncip {
 	 */
 	private function post($request) 
 	{
+
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $this->url);
 		if ($this->user_agent != null) {
