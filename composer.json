@@ -3,7 +3,7 @@
     "type": "library",
     "description": "Basic NCIP library",
     "homepage": "http://github.com/danmichaelo/ncip",
-    "keywords": ["ncip"],
+    "keywords": ["ncip", "laravel"],
     "authors": [
         {
             "name": "Dan Michael O. Heggø",

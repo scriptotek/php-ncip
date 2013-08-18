@@ -1,12 +1,10 @@
-<?php
+<?php namespace Danmichaelo\Ncip;
 /* 
  * (c) Dan Michael O. Heggø (2013)
  * 
  * Basic Ncip library. This class currently only implements 
  * a small subset of the NCIP services.
  */
-
-namespace Danmichaelo\Ncip;
 
 use Danmichaelo\CustomXMLElement\CustomXMLElement;
 
