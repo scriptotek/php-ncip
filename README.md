@@ -16,9 +16,10 @@ Add the package to the `require` attribute of your `composer.json` file.
 
 and do `composer update`.
 
-### Installing for Laravel 4
+### Additional steps to install as a Laravel 4 package
 
-1. Add `'Ncip' => 'Danmichaelo\Ncip\Ncip',` to the list of class aliases in `app/config/app.php`
+1. Add `'Danmichaelo\NcipServiceProvider',` to the list of service providers in `app/config/app.php`
+2. Add `'Ncip' => 'Danmichaelo\Ncip\Ncip',` to the list of class aliases in `app/config/app.php`
 3. In console run `php artisan config:publish danmichaelo/ncip` to create the config file `app/config/packages/danmichael/ncip/config.php`
 
 ## Standalone use without Laravel:
