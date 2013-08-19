@@ -51,7 +51,7 @@ class Ncip {
 	}
 
 	/**
-	 * Posts an xml document to the NCIP service
+	 * Post xml document to the NCIP service
 	 *
 	 * @param  string  $request
 	 * @return CustomXMLElement
@@ -74,14 +74,20 @@ class Ncip {
 		$response = curl_exec($ch);
 		curl_close($ch);
 
-		$xml = new CustomXMLElement($response);
+		// TODO: Throw some smart exception if we receive invalid XML (most likely due to wrong or no URL set)
+		//try {
+			$xml = @new CustomXMLElement($response);
+		//} catch (Exception $e) {
+		//  	dd("Did not receive a valid XML response from the NCIP server");
+		//}
+
 		$xml->registerXPathNamespaces($this->namespaces);
 
 		return $xml;
 	}
 
 	/**
-	 * Posts an xml document to the NCIP service
+	 * Lookup user information from user id
 	 *
 	 * @param  string  $user_id
 	 * @return array
@@ -115,6 +121,7 @@ class Ncip {
 				'firstname' => $uinfo->text('ns1:NameInformation/ns1:PersonalNameInformation/ns1:StructuredPersonalUserName/ns1:GivenName'),
 				'lastname' => $uinfo->text('ns1:NameInformation/ns1:PersonalNameInformation/ns1:StructuredPersonalUserName/ns1:Surname'),
 				'lang' => $uinfo->text('ns1:UserLanguage'), // Gir "eng" for alle foreløpig
+				'loanedItems' => array(),
 			);
 			foreach ($uinfo->xpath('ns1:UserAddressInformation') as $adrinfo) {
 				if ($adrinfo->text('ns1:UserAddressRoleType') == 'mailto') {
@@ -124,13 +131,23 @@ class Ncip {
 				}
 			}
 
+			foreach ($response->xpath('ns1:LoanedItem') as $loanedItem) {
+				$o['loanedItems'][] = array(
+					'id' => $loanedItem->text('ns1:ItemId/ns1:ItemIdentifierValue'),
+					'reminderLevel' => $loanedItem->text('ns1:ReminderLevel'),
+					'dateDue' => $loanedItem->text('ns1:DateDue'),
+					'title' => $loanedItem->text('ns1:Title')
+				);
+				// TODO: Add ns1:Ext/ns1:BibliographicDescription ?
+			}
+
 		}
 
 		return $o;
 	}
 
 	/**
-	 * Posts an xml document to the NCIP service
+	 * Check out an item to a user
 	 *
 	 * @param  string  $user_id
 	 * @param  string  $item_id
@@ -169,7 +186,7 @@ class Ncip {
 	}
 
 	/**
-	 * Posts an xml document to the NCIP service
+	 * Check in an item
 	 *
 	 * @param  string  $item_id
 	 * @return array
@@ -198,6 +215,52 @@ class Ncip {
 			$o = array(
 				'success' => true
 			);
+		}
+
+		return $o;
+	}
+
+	/**
+	 * Lookup item information from item id
+	 *
+	 * @param  string  $item_id
+	 * @return array
+	 */
+	public function lookupItem($item_id)
+	{
+		$request = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+			<ns1:NCIPMessage xmlns:ns1="http://www.niso.org/2008/ncip" ns1:version="http://www.niso.org/schemas/ncip/v2_01/ncip_v2_01.xsd">
+			    <ns1:LookupItem>
+			        <ns1:ItemId>
+			           <ns1:ItemIdentifierType>Accession Number</ns1:ItemIdentifierType>
+			           <ns1:ItemIdentifierValue>' . $item_id . '</ns1:ItemIdentifierValue>
+			        </ns1:ItemId>
+			    </ns1:LookupItem>
+			</ns1:NCIPMessage>';
+
+		$response = $this->post($request);
+		$response = $response->first('/ns1:NCIPMessage/ns1:LookupItemResponse');
+
+		if ($response->first('ns1:Problem')) {
+			$o = array(
+				'exists' => false,
+				'error' => $response->text('ns1:Problem/ns1:ProblemDetail')
+			);
+		} else {
+			$uinfo = $response->first('ns1:UserOptionalFields');
+			$o = array(
+				'exists' => true,
+				'dateRecalled' => $response->text('ns1:DateRecalled'),
+			);
+
+			$oinfo = $response->first('ns1:ItemOptionalFields');
+			$o['circulationStatus'] = $oinfo->text('ns1:CirculationStatus');
+
+			$o['title'] = $oinfo->text('ns1:BibliographicDescription/ns1:Title');
+			$o['author'] = $oinfo->text('ns1:BibliographicDescription/ns1:Author');
+			$o['publicationDate'] = $oinfo->text('ns1:BibliographicDescription/ns1:PublicationDate');
+			$o['publisher'] = $oinfo->text('ns1:BibliographicDescription/ns1:Publisher');
+
 		}
 
 		return $o;
