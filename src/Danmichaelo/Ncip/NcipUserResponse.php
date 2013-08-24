@@ -52,7 +52,7 @@ class NcipUserResponse extends NcipResponse {
 				$this->loanedItems[] = array(
 					'id' => $loanedItem->text('ns1:ItemId/ns1:ItemIdentifierValue'),
 					'reminderLevel' => $loanedItem->text('ns1:ReminderLevel'),
-					'dateDue' => $loanedItem->text('ns1:DateDue'),
+					'dateDue' => $this->parseDateTime($loanedItem->text('ns1:DateDue')),
 					'title' => $loanedItem->text('ns1:Title')
 				);
 				// TODO: Add ns1:Ext/ns1:BibliographicDescription ?

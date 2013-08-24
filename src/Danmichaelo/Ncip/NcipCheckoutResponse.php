@@ -64,7 +64,7 @@ class NcipCheckoutResponse implements NcipResponseInterface extends NcipResponse
 			$this->error = $response->text('ns1:Problem/ns1:ProblemDetail');
 		} else {
 			$this->success = true;
-			$this->dueDate = $this->dom->text('ns1:DateDue');
+			$this->dueDate = $this->parseDateTime($this->dom->text('ns1:DateDue'));
 		}
 
 	}
