@@ -43,7 +43,7 @@
  *	  </ns1:NCIPMessage>
  */
 
-class NcipCheckoutResponse implements NcipResponseInterface extends NcipResponse  {
+class NcipCheckoutResponse extends NcipResponse implements NcipResponseInterface {
 
 	public $success;
 	public $error;
@@ -61,7 +61,7 @@ class NcipCheckoutResponse implements NcipResponseInterface extends NcipResponse
 
 		if ($this->dom->first('ns1:Problem')) {
 			$this->success = false;
-			$this->error = $response->text('ns1:Problem/ns1:ProblemDetail');
+			$this->error = $this->dom->text('ns1:Problem/ns1:ProblemDetail');
 		} else {
 			$this->success = true;
 			$this->dueDate = $this->parseDateTime($this->dom->text('ns1:DateDue'));
