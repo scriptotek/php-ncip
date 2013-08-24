@@ -6,9 +6,8 @@
  * a small subset of the NCIP services.
  */
 
-class NcipUserResponse implements NcipResponse {
+class NcipUserResponse extends NcipResponse {
 
-	protected $dom;
 	public $exists;
 	public $agencyId;
 	public $userId;

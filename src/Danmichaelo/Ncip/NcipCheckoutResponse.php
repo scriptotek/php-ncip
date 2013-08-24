@@ -43,9 +43,8 @@
  *	  </ns1:NCIPMessage>
  */
 
-class NcipCheckoutResponse implements NcipResponse {
+class NcipCheckoutResponse implements NcipResponseInterface extends NcipResponse  {
 
-	protected $dom;
 	public $success;
 	public $error;
 	public $dueDate;

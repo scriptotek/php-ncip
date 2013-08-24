@@ -1,15 +1,11 @@
 <?php namespace Danmichaelo\Ncip;
 
+class NcipResponse {
 
-interface NcipResponse {
+	protected $dom;
 
-	/**
-	 * Create a new Ncip response
-	 *
-	 * @param  CustomXMLElement  $dom
-	 * @return void
-	 */
-	public function __construct($dom);
-
+	public function parseDateTime($datestring) {
+		return \DateTime::createFromFormat('Y-m-d?H:i:s.ue', $datestring);
+	}
 
 }
