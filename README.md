@@ -19,20 +19,21 @@ and do `composer update`.
 ### Additional steps to install as a Laravel 4 package
 
 1. Add `'Danmichaelo\NcipServiceProvider',` to the list of service providers in `app/config/app.php`
-2. Add `'Ncip' => 'Danmichaelo\Ncip\Ncip',` to the list of class aliases in `app/config/app.php`
+2. Add `'NcipClient' => 'Danmichaelo\Ncip\NcipClient',` to the list of class aliases in `app/config/app.php`
 3. In console run `php artisan config:publish danmichaelo/ncip` to create the config file `app/config/packages/danmichael/ncip/config.php`
 
 ## Standalone use without Laravel:
 
 	require_once('vendor/autoload.php');
+	use Danmichaelo\Ncip\NcipClient;
 
 	$options = array('url' => 'http://...', 'agency_id' => '...');
-	$ncip = new Danmichaelo\Ncip\Ncip($options);
+	$ncip = new NcipClient($options);
 
 
 ## Example:
 
-	$ncip = new Ncip();
+	$ncip = new NcipClient();
 	$response = $ncip->lookupUser($user_id);
 	if ($response['exists']) {
 		echo 'Hello ' . $response['firstname'] . ' ' . $response['lastname'];
