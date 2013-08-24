@@ -61,7 +61,6 @@ class NcipUserResponse implements NcipResponse {
 
 		}
 
-		return $o;
 	}
 
 }

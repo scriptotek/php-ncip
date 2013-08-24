@@ -6,8 +6,7 @@
  * a small subset of the NCIP services.
  */
 
-#use Danmichaelo\CustomXMLElement\CustomXMLElement;
-
+use Danmichaelo\CustomXMLElement\CustomXMLElement;
 
 class Config {
 
