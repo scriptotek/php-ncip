@@ -18,10 +18,10 @@ class NcipClient {
 	 * @param  array   $options
 	 * @return void
 	 */
-	public function __construct(NcipConnector $connector, $options = array())
+	public function __construct(NcipConnector $connector = null, $options = array())
 	{
 		$this->agency_id = array_get($options, 'agency_id', Config::get('ncip::agency_id'));
-		$this->connector = $connector;
+		$this->connector = $connector ?: new NcipConnector;
 	}
 
 	/**
