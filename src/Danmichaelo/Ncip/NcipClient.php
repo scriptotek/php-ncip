@@ -44,8 +44,6 @@ class NcipClient {
 		</ns1:NCIPMessage>';
 
 		$response = $this->connector->post($request);
-
-		$response = $response->first('/ns1:NCIPMessage/ns1:LookupUserResponse');
 		return new NcipUserResponse($response);
 	}
 
@@ -72,8 +70,6 @@ class NcipClient {
 			</ns1:NCIPMessage>';
 
 		$response = $this->connector->post($request);
-		$response = $response->first('/ns1:NCIPMessage/ns1:CheckOutItemResponse');
-
 		return new NcipCheckoutResponse($response);
 	}
 

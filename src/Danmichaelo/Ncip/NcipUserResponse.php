@@ -26,7 +26,7 @@ class NcipUserResponse extends NcipResponse implements NcipResponseInterface {
 	 */
 	public function __construct($dom)
 	{
-		$this->dom = $dom;
+		$this->dom = $dom->first('/ns1:NCIPMessage/ns1:LookupUserResponse');
 
 		if ($this->dom->first('ns1:Problem')) {
 			$this->exists = false;
