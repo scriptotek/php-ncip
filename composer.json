@@ -16,6 +16,10 @@
         "danmichaelo/customxmlelement": ">=0.1.1",
         "illuminate/support": "4.*@dev"
     },
+    "require-dev": {
+        "phpunit/phpunit": "3.8.*",
+        "mockery/mockery": "dev-master"
+    },
     "autoload": {
         "psr-0": {
             "Danmichaelo\\Ncip": "src/"
