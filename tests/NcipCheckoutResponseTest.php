@@ -56,7 +56,7 @@ class NcipCheckoutResponseTest extends \PHPUnit_Framework_TestCase {
 	public function testParseDummySuccessResponse() {
 		$dummy_response = new CustomXMLElement($this->dummy_response_success);
 		$response = new NcipCheckoutResponse($dummy_response);
-		$date1 = new \DateTime('2013-09-21 18:54:39');
+		$date1 = new \DateTime('2013-09-21T18:54:39+02:00');
 
 		$this->assertInstanceOf('Danmichaelo\Ncip\NcipCheckoutResponse', $response);
 		$this->assertTrue($response->success);
