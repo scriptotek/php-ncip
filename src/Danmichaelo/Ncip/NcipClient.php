@@ -28,7 +28,7 @@ class NcipClient {
 	 * Lookup user information from user id
 	 *
 	 * @param  string  $user_id
-	 * @return NcipUserResponse
+	 * @return UserResponse
 	 */
 	public function lookupUser($user_id)
 	{
@@ -44,7 +44,7 @@ class NcipClient {
 		</ns1:NCIPMessage>';
 
 		$response = $this->connector->post($request);
-		return new NcipUserResponse($response);
+		return new UserResponse($response);
 	}
 
 	/**
@@ -52,7 +52,7 @@ class NcipClient {
 	 *
 	 * @param  string  $user_id
 	 * @param  string  $item_id
-	 * @return NcipUserResponse
+	 * @return CheckoutResponse
 	 */
 	public function checkOutItem($user_id, $item_id)
 	{
@@ -70,7 +70,7 @@ class NcipClient {
 			</ns1:NCIPMessage>';
 
 		$response = $this->connector->post($request);
-		return new NcipCheckoutResponse($response);
+		return new CheckoutResponse($response);
 	}
 
 	/**

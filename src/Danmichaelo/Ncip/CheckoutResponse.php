@@ -43,7 +43,7 @@
  *	  </ns1:NCIPMessage>
  */
 
-class NcipCheckoutResponse extends NcipResponse implements NcipResponseInterface {
+class CheckoutResponse extends Response implements ResponseInterface {
 
 	public $success;
 	public $error;

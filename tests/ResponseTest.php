@@ -1,16 +1,16 @@
 <?php namespace Danmichaelo\Ncip;
 
-class NcipResponseTest extends \PHPUnit_Framework_TestCase {
+class ResponseTest extends \PHPUnit_Framework_TestCase {
 
 	protected function setUp() {
-		date_default_timezone_set('Europe/Oslo');
+		date_default_timezone_set('UTC');
 	}
 	
 	public function testParseDateTime() {
-		$nr = new NcipResponse();
+		$nr = new Response();
 		$date1 = $nr->parseDateTime('2013-09-21T18:54:39.718+02:00');
-		$date2 = new \DateTime('2013-09-21 18:54:39');
-		$date3 = new \DateTime('2013-09-21 19:54:39');
+		$date2 = new \DateTime('2013-09-21T18:54:39+02:00');
+		$date3 = new \DateTime('2013-09-21T19:54:39+02:00');
 
 		$this->assertInstanceOf('DateTime', $date1);
 		$this->assertEquals($date1->getTimestamp(), $date2->getTimestamp());

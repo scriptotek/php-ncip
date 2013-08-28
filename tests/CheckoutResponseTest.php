@@ -2,7 +2,7 @@
 
 use Danmichaelo\CustomXMLElement\CustomXMLElement;
 
-class NcipCheckoutResponseTest extends \PHPUnit_Framework_TestCase {
+class CheckoutResponseTest extends \PHPUnit_Framework_TestCase {
 
 	protected $dummy_response_success = '
  	  <ns1:NCIPMessage xmlns:ns1="http://www.niso.org/2008/ncip">
@@ -55,19 +55,19 @@ class NcipCheckoutResponseTest extends \PHPUnit_Framework_TestCase {
 	
 	public function testParseDummySuccessResponse() {
 		$dummy_response = new CustomXMLElement($this->dummy_response_success);
-		$response = new NcipCheckoutResponse($dummy_response);
+		$response = new CheckoutResponse($dummy_response);
 		$date1 = new \DateTime('2013-09-21T18:54:39+02:00');
 
-		$this->assertInstanceOf('Danmichaelo\Ncip\NcipCheckoutResponse', $response);
+		$this->assertInstanceOf('Danmichaelo\Ncip\CheckoutResponse', $response);
 		$this->assertTrue($response->success);
 		$this->assertEquals($response->dueDate->getTimestamp(), $date1->getTimestamp());
 	}
 
 	public function testParseDummyFailResponse() {
 		$dummy_response = new CustomXMLElement($this->dummy_response_fail);
-		$response = new NcipCheckoutResponse($dummy_response);
+		$response = new CheckoutResponse($dummy_response);
 
-		$this->assertInstanceOf('Danmichaelo\Ncip\NcipCheckoutResponse', $response);
+		$this->assertInstanceOf('Danmichaelo\Ncip\CheckoutResponse', $response);
 		$this->assertFalse($response->success);
 	}
 

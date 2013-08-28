@@ -92,7 +92,7 @@ class NcipClientTest extends \PHPUnit_Framework_TestCase {
 	public function testLookupUser() {
 		$response = $this->ncip->lookupUser('test123456');
 
-		$this->assertInstanceOf('Danmichaelo\Ncip\NcipUserResponse', $response);
+		$this->assertInstanceOf('Danmichaelo\Ncip\UserResponse', $response);
 		$this->assertEquals('Donald', $response->firstName);
 
 	}

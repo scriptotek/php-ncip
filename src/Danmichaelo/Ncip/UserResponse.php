@@ -6,7 +6,7 @@
  * a small subset of the NCIP services.
  */
 
-class NcipUserResponse extends NcipResponse implements NcipResponseInterface {
+class UserResponse extends Response implements ResponseInterface {
 
 	public $exists;
 	public $agencyId;

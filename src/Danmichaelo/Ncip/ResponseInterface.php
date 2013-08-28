@@ -1,7 +1,7 @@
 <?php namespace Danmichaelo\Ncip;
 
 
-interface NcipResponseInterface {
+interface ResponseInterface {
 
 	/**
 	 * Create a new Ncip response

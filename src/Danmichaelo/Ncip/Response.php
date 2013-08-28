@@ -1,6 +1,6 @@
 <?php namespace Danmichaelo\Ncip;
 
-class NcipResponse {
+class Response {
 
 	protected $dom;
 
