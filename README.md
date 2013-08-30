@@ -1,5 +1,8 @@
 # Basic NCIP php library and Laravel package
 
+[![Build Status](https://travis-ci.org/danmichaelo/ncip.png?branch=master)](https://travis-ci.org/danmichaelo/ncip)
+[![Coverage Status](https://coveralls.io/repos/danmichaelo/ncip/badge.png?branch=master)](https://coveralls.io/r/danmichaelo/ncip?branch=master)
+
 Currently implementing only a small subset of the NCIP services.
 
 ## Installation:
