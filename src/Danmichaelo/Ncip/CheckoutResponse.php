@@ -58,14 +58,21 @@ class CheckoutResponse extends Response implements ResponseInterface {
 	public function __construct($dom)
 	{
 
-		$this->dom = $dom->first('/ns1:NCIPMessage/ns1:CheckOutItemResponse');
+		if (is_null($dom)) {
 
-		if ($this->dom->first('ns1:Problem')) {
 			$this->success = false;
-			$this->error = $this->dom->text('ns1:Problem/ns1:ProblemDetail');
+			$this->error = 'Empty response';
+
 		} else {
-			$this->success = true;
-			$this->dueDate = $this->parseDateTime($this->dom->text('ns1:DateDue'));
+			$this->dom = $dom->first('/ns1:NCIPMessage/ns1:CheckOutItemResponse');
+
+			if ($this->dom->first('ns1:Problem')) {
+				$this->success = false;
+				$this->error = $this->dom->text('ns1:Problem/ns1:ProblemDetail');
+			} else {
+				$this->success = true;
+				$this->dueDate = $this->parseDateTime($this->dom->text('ns1:DateDue'));
+			}
 		}
 
 	}

@@ -52,7 +52,7 @@ class CheckoutResponseTest extends \PHPUnit_Framework_TestCase {
 
 	protected $dummy_response_errorneous = '
 		<ns1:NCIPMessage ';
-	
+
 	public function testParseDummySuccessResponse() {
 		$dummy_response = new CustomXMLElement($this->dummy_response_success);
 		$response = new CheckoutResponse($dummy_response);
@@ -69,6 +69,14 @@ class CheckoutResponseTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertInstanceOf('Danmichaelo\Ncip\CheckoutResponse', $response);
 		$this->assertFalse($response->success);
+	}
+
+	public function testParseNullResponse() {
+		$response = new CheckoutResponse(null);
+
+		$this->assertInstanceOf('Danmichaelo\Ncip\CheckoutResponse', $response);
+		$this->assertFalse($response->success);
+		$this->assertEquals('Empty response', $response->error);
 	}
 
 }

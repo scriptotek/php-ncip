@@ -65,6 +65,10 @@ class NcipConnector {
 		$response = curl_exec($ch);
 		curl_close($ch);
 
+		if (empty($response)) {
+			return null;
+		}
+
 		// TODO: Throw some smart exception if we receive invalid XML (most likely due to wrong or no URL set)
 		//try {
 			$xml = new CustomXMLElement($response);
