@@ -39,6 +39,6 @@ and do `composer update`.
 	$ncip = new NcipClient();
 	$response = $ncip->lookupUser($user_id);
 	if ($response['exists']) {
-		echo 'Hello ' . $response['firstname'] . ' ' . $response['lastname'];
+		echo 'Hello ' . $response->firstName . ' ' . $response->lastName;
 	else:
 		echo 'User not found';
