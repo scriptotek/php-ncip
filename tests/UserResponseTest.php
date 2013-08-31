@@ -91,7 +91,7 @@ class UserResponseTest extends \PHPUnit_Framework_TestCase {
 
 	protected $dummy_response_errorneous = '
 		<ns1:NCIPMessage ';
-	
+
 	public function testParseDummySuccessResponse() {
 		$dummy_response = new CustomXMLElement($this->dummy_response_success);
 		$response = new UserResponse($dummy_response);
@@ -111,6 +111,13 @@ class UserResponseTest extends \PHPUnit_Framework_TestCase {
 	public function testParseDummyFailResponse() {
 		$dummy_response = new CustomXMLElement($this->dummy_response_fail);
 		$response = new UserResponse($dummy_response);
+
+		$this->assertInstanceOf('Danmichaelo\Ncip\UserResponse', $response);
+		$this->assertFalse($response->exists);
+	}
+
+	public function testParseEmptyUserResponse() {
+		$response = new UserResponse;
 
 		$this->assertInstanceOf('Danmichaelo\Ncip\UserResponse', $response);
 		$this->assertFalse($response->exists);

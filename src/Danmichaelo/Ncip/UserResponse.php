@@ -8,7 +8,7 @@
 
 class UserResponse extends Response implements ResponseInterface {
 
-	public $exists;
+	public $exists = false;
 	public $agencyId;
 	public $userId;
 	public $firstName;
@@ -18,14 +18,18 @@ class UserResponse extends Response implements ResponseInterface {
 	public $email;
 	public $phone;
 
+	protected $dom;
+
 	/**
 	 * Create a new Ncip user response
 	 *
 	 * @param  CustomXMLElement  $dom
 	 * @return void
 	 */
-	public function __construct($dom)
+	public function __construct($dom = null)
 	{
+		if (is_null($dom)) return;
+
 		$this->dom = $dom->first('/ns1:NCIPMessage/ns1:LookupUserResponse');
 
 		if ($this->dom->first('ns1:Problem')) {
