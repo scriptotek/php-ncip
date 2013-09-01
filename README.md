@@ -42,3 +42,7 @@ and do `composer update`.
 		echo 'Hello ' . $response->firstName . ' ' . $response->lastName;
 	else:
 		echo 'User not found';
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/danmichaelo/ncip/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
