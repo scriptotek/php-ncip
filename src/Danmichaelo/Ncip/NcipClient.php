@@ -99,38 +99,6 @@ class NcipClient {
 	/**
 	 * Check in an item
 	 *
-	 * Example response:
-	 *
-	 *		<ns1:NCIPMessage xmlns:ns1="http://www.niso.org/2008/ncip">
-	 *		   <ns1:CheckInItemResponse>
-	 *			  <ns1:ItemId>
-	 *				 <ns1:AgencyId>k</ns1:AgencyId>
-	 *				 <ns1:ItemIdentifierValue>13k040189</ns1:ItemIdentifierValue>
-	 *			  </ns1:ItemId>
-	 *			  <ns1:ItemOptionalFields>
-	 *				 <ns1:BibliographicDescription>
-	 *					<ns1:Author>DuCharme, Bob</ns1:Author>
-	 *					<ns1:BibliographicRecordId>
-	 *					   <ns1:BibliographicRecordIdentifier>11447981x</ns1:BibliographicRecordIdentifier>
-	 *					   <ns1:BibliographicRecordIdentifierCode>Accession Number</ns1:BibliographicRecordIdentifierCode>
-	 *					</ns1:BibliographicRecordId>
-	 *					<ns1:Edition/>
-	 *					<ns1:Pagination>XIII, 235 s., ill.</ns1:Pagination>
-	 *					<ns1:PublicationDate>2011</ns1:PublicationDate>
-	 *					<ns1:Publisher>O'Reilly</ns1:Publisher>
-	 *					<ns1:Title>Learning SPARQL : querying and updating with SPARQL 1.1</ns1:Title>
-	 *					<ns1:Language>eng</ns1:Language>
-	 *					<ns1:MediumType>Book</ns1:MediumType>
-	 *				 </ns1:BibliographicDescription>
-	 *			  </ns1:ItemOptionalFields>
-	 *			  <ns1:Ext>
-	 *				 <ns1:UserOptionalFields>
-	 *					<ns1:UserLanguage>eng</ns1:UserLanguage>
-	 *				 </ns1:UserOptionalFields>
-	 *			  </ns1:Ext>
-	 *		   </ns1:CheckInItemResponse>
-	 *		</ns1:NCIPMessage>
-	 *
 	 * @param  string  $item_id
 	 * @return array
 	 */
@@ -147,27 +115,14 @@ class NcipClient {
 			</ns1:NCIPMessage>';
 
 		$response = $this->parseResponse($this->connector->post($request));
-		$response = $response->first('/ns1:NCIPMessage/ns1:CheckInItemResponse');
-
-		if ($response->first('ns1:Problem')) {
-			$o = array(
-				'success' => false,
-				'error' => $response->text('ns1:Problem/ns1:ProblemDetail')
-			);
-		} else {
-			$o = array(
-				'success' => true
-			);
-		}
-
-		return $o;
+		return new CheckInResponse($response);
 	}
 
 	/**
 	 * Lookup item information from item id
 	 *
 	 * @param  string  $item_id
-	 * @return array
+	 * @return ItemResponse
 	 */
 	public function lookupItem($item_id)
 	{
@@ -182,31 +137,7 @@ class NcipClient {
 			</ns1:NCIPMessage>';
 
 		$response = $this->parseResponse($this->connector->post($request));
-		$response = $response->first('/ns1:NCIPMessage/ns1:LookupItemResponse');
-
-		if ($response->first('ns1:Problem')) {
-			$o = array(
-				'exists' => false,
-				'error' => $response->text('ns1:Problem/ns1:ProblemDetail')
-			);
-		} else {
-			$uinfo = $response->first('ns1:UserOptionalFields');
-			$o = array(
-				'exists' => true,
-				'dateRecalled' => $response->text('ns1:DateRecalled'),
-			);
-
-			$oinfo = $response->first('ns1:ItemOptionalFields');
-			$o['circulationStatus'] = $oinfo->text('ns1:CirculationStatus');
-
-			$o['title'] = $oinfo->text('ns1:BibliographicDescription/ns1:Title');
-			$o['author'] = $oinfo->text('ns1:BibliographicDescription/ns1:Author');
-			$o['publicationDate'] = $oinfo->text('ns1:BibliographicDescription/ns1:PublicationDate');
-			$o['publisher'] = $oinfo->text('ns1:BibliographicDescription/ns1:Publisher');
-
-		}
-
-		return $o;
+		return new ItemResponse($response);
 	}
 
 }
