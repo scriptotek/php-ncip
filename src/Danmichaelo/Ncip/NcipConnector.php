@@ -1,8 +1,8 @@
 <?php namespace Danmichaelo\Ncip;
-/* 
+/*
  * (c) Dan Michael O. Heggø (2013)
- * 
- * Basic Ncip library. This class currently only implements 
+ *
+ * Basic Ncip library. This class currently only implements
  * a small subset of the NCIP services.
  */
 
@@ -10,7 +10,7 @@ class Config {
 
 	static function get($key) {
 		if (class_exists('\Config')) {
-			return \Config::get($key);			
+			return \Config::get($key);
 		} else {
 			return null;
 		}
@@ -42,7 +42,7 @@ class NcipConnector {
 	 * @param  string  $request
 	 * @return CustomXMLElement
 	 */
-	public function post($request) 
+	public function post($request)
 	{
 
 		$ch = curl_init();

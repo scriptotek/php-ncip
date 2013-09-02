@@ -1,8 +1,8 @@
 <?php namespace Danmichaelo\Ncip;
-/* 
+/*
  * (c) Dan Michael O. Heggø (2013)
- * 
- * Basic Ncip library. This class currently only implements 
+ *
+ * Basic Ncip library. This class currently only implements
  * a small subset of the NCIP services.
  *
  * Example response:
@@ -43,7 +43,7 @@
  *	  </ns1:NCIPMessage>
  */
 
-class CheckoutResponse extends Response implements ResponseInterface {
+class CheckoutResponse extends Response {
 
 	public $success;
 	public $error;
