@@ -75,7 +75,7 @@ class NcipClient {
 	 *
 	 * @param  string  $user_id
 	 * @param  string  $item_id
-	 * @return CheckoutResponse
+	 * @return CheckOutResponse
 	 */
 	public function checkOutItem($user_id, $item_id)
 	{
@@ -93,7 +93,7 @@ class NcipClient {
 			</ns1:NCIPMessage>';
 
 		$response = $this->parseResponse($this->connector->post($request));
-		return new CheckoutResponse($response);
+		return new CheckOutResponse($response);
 	}
 
 	/**
