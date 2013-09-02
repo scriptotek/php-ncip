@@ -6,10 +6,14 @@
  * a small subset of the NCIP services.
  */
 
+use Danmichaelo\CustomXMLElement\CustomXMLElement,
+	Danmichaelo\CustomXMLElement\InvalidXMLException;
+
 class NcipClient {
 
 	protected $agency_id;
 	protected $connector;
+	protected $namespaces;
 
 	/**
 	 * Create a new Ncip client
@@ -22,7 +26,26 @@ class NcipClient {
 	{
 		$this->agency_id = array_get($options, 'agency_id', Config::get('ncip::agency_id'));
 		$this->connector = $connector ?: new NcipConnector;
+		$this->namespaces = array_get($options, 'namespaces',
+			array('ns1' => 'http://www.niso.org/2008/ncip'));
 	}
+
+	protected function parseResponse($xml)
+	{
+		if (is_null($xml)) {
+			return null;
+		}
+		try {
+			$xml = new CustomXMLElement($xml);
+		} catch (InvalidXMLException $e) {
+			throw new InvalidNcipResponseException('Invalid response received from the NCIP service "' . $this->connector->url . '". Did you configure it correctly?');
+		}
+
+		$xml->registerXPathNamespaces($this->namespaces);
+
+		return $xml;
+	}
+
 
 	/**
 	 * Lookup user information from user id
@@ -43,7 +66,7 @@ class NcipClient {
 			</ns1:LookupUser>
 		</ns1:NCIPMessage>';
 
-		$response = $this->connector->post($request);
+		$response = $this->parseResponse($this->connector->post($request));
 		return new UserResponse($response);
 	}
 
@@ -69,7 +92,7 @@ class NcipClient {
 				</ns1:CheckOutItem>
 			</ns1:NCIPMessage>';
 
-		$response = $this->connector->post($request);
+		$response = $this->parseResponse($this->connector->post($request));
 		return new CheckoutResponse($response);
 	}
 
@@ -123,7 +146,7 @@ class NcipClient {
 				</ns1:CheckInItem>
 			</ns1:NCIPMessage>';
 
-		$response = $this->connector->post($request);
+		$response = $this->parseResponse($this->connector->post($request));
 		$response = $response->first('/ns1:NCIPMessage/ns1:CheckInItemResponse');
 
 		if ($response->first('ns1:Problem')) {
@@ -158,7 +181,7 @@ class NcipClient {
 				</ns1:LookupItem>
 			</ns1:NCIPMessage>';
 
-		$response = $this->connector->post($request);
+		$response = $this->parseResponse($this->connector->post($request));
 		$response = $response->first('/ns1:NCIPMessage/ns1:LookupItemResponse');
 
 		if ($response->first('ns1:Problem')) {

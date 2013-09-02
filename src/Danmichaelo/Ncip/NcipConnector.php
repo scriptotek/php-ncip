@@ -6,8 +6,6 @@
  * a small subset of the NCIP services.
  */
 
-use Danmichaelo\CustomXMLElement\CustomXMLElement;
-
 class Config {
 
 	static function get($key) {
@@ -22,9 +20,8 @@ class Config {
 
 class NcipConnector {
 
-	protected $url;
-	protected $user_agent;
-	protected $namespaces;
+	public $url;
+	public $user_agent;
 
 	/**
 	 * Create a new Ncip connector
@@ -37,8 +34,6 @@ class NcipConnector {
 	{
 		$this->url = array_get($options, 'url', Config::get('ncip::url'));
 		$this->user_agent = array_get($options, 'user_agent', Config::get('ncip::user_agent'));
-		$this->namespaces = array_get($options, 'namespaces', 
-			array('ns1' => 'http://www.niso.org/2008/ncip'));
 	}
 
 	/**
@@ -69,16 +64,7 @@ class NcipConnector {
 			return null;
 		}
 
-		// TODO: Throw some smart exception if we receive invalid XML (most likely due to wrong or no URL set)
-		//try {
-			$xml = new CustomXMLElement($response);
-		//} catch (Exception $e) {
-		//  	dd("Did not receive a valid XML response from the NCIP server");
-		//}
-
-		$xml->registerXPathNamespaces($this->namespaces);
-
-		return $xml;
+		return $response;
 	}
 
 }

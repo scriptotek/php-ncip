@@ -1,12 +1,26 @@
 <?php namespace Danmichaelo\Ncip;
 
-use Danmichaelo\CustomXMLElement\CustomXMLElement;
 use Mockery as m;
 
 class NcipClientTest extends \PHPUnit_Framework_TestCase {
 	
 	protected function setUp() {
-		$mocked_xml_response = '
+
+	}
+
+	public function setUpMock($xml_response)
+	{
+
+		$mock = m::mock('Danmichaelo\Ncip\NcipConnector');
+		$mock->shouldReceive('post')
+			->once()
+			->andReturn($xml_response);
+		$this->ncip = new NcipClient($mock);
+	}
+
+	public function testLookupUser() {
+
+		$this->setupMock('
 			<ns1:NCIPMessage xmlns:ns1="http://www.niso.org/2008/ncip">
 			   <ns1:LookupUserResponse>
 			      <ns1:UserId>
@@ -79,22 +93,24 @@ class NcipClientTest extends \PHPUnit_Framework_TestCase {
 			      </ns1:UserOptionalFields>
 			   </ns1:LookupUserResponse>
 			</ns1:NCIPMessage>
-		';
-		$mocked_xml_response = new CustomXMLElement($mocked_xml_response);
-		
-		$mock = m::mock('Danmichaelo\Ncip\NcipConnector');
-		$mock->shouldReceive('post')
-			->once()
-			->andReturn($mocked_xml_response);
-		$this->ncip = new NcipClient($mock);
-	}
+		');
 
-	public function testLookupUser() {
 		$response = $this->ncip->lookupUser('test123456');
 
 		$this->assertInstanceOf('Danmichaelo\Ncip\UserResponse', $response);
 		$this->assertEquals('Donald', $response->firstName);
 
+	}
+
+	/**
+	 * @expectedException Danmichaelo\Ncip\InvalidNcipResponseException
+	 */
+	public function testInvalidResponse() {
+				$this->setupMock('
+			<ns1:NCIPMess
+		');
+
+		$response = $this->ncip->lookupUser('test123456');
 	}
 
 }
