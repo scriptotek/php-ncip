@@ -1,6 +1,6 @@
 <?php namespace Danmichaelo\Ncip;
 
-use Danmichaelo\CustomXMLElement\CustomXMLElement;
+use Danmichaelo\QuiteSimpleXMLElement\QuiteSimpleXMLElement;
 
 class CheckOutResponseTest extends \PHPUnit_Framework_TestCase {
 
@@ -54,7 +54,7 @@ class CheckOutResponseTest extends \PHPUnit_Framework_TestCase {
 		<ns1:NCIPMessage ';
 
 	public function testParseDummySuccessResponse() {
-		$dummy_response = new CustomXMLElement($this->dummy_response_success);
+		$dummy_response = new QuiteSimpleXMLElement($this->dummy_response_success);
 		$response = new CheckOutResponse($dummy_response);
 		$date1 = new \DateTime('2013-09-21T18:54:39+02:00');
 
@@ -64,7 +64,7 @@ class CheckOutResponseTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testParseDummyFailResponse() {
-		$dummy_response = new CustomXMLElement($this->dummy_response_fail);
+		$dummy_response = new QuiteSimpleXMLElement($this->dummy_response_fail);
 		$response = new CheckOutResponse($dummy_response);
 
 		$this->assertInstanceOf('Danmichaelo\Ncip\CheckOutResponse', $response);

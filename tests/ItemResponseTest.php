@@ -1,6 +1,6 @@
 <?php namespace Danmichaelo\Ncip;
 
-use Danmichaelo\CustomXMLElement\CustomXMLElement;
+use Danmichaelo\QuiteSimpleXMLElement\QuiteSimpleXMLElement;
 
 
 class ItemResponseTest extends \PHPUnit_Framework_TestCase {
@@ -107,7 +107,7 @@ class ItemResponseTest extends \PHPUnit_Framework_TestCase {
  	  ';
 
 	public function testOnLoanResponse() {
-		$xml = new CustomXMLElement($this->dummy_response_onloan);
+		$xml = new QuiteSimpleXMLElement($this->dummy_response_onloan);
 		$response = new ItemResponse($xml);
 		$date1 = new \DateTime('2013-09-30T19:32:39+02:00');
 
@@ -122,7 +122,7 @@ class ItemResponseTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testAvailableResponse() {
-		$xml = new CustomXMLElement($this->dummy_response_available);
+		$xml = new QuiteSimpleXMLElement($this->dummy_response_available);
 		$response = new ItemResponse($xml);
 
 		$this->assertInstanceOf('Danmichaelo\Ncip\ItemResponse', $response);

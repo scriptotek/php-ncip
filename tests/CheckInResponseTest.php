@@ -1,6 +1,6 @@
 <?php namespace Danmichaelo\Ncip;
 
-use Danmichaelo\CustomXMLElement\CustomXMLElement;
+use Danmichaelo\QuiteSimpleXMLElement\QuiteSimpleXMLElement;
 
 class CheckInResponseTest extends \PHPUnit_Framework_TestCase {
 
@@ -36,7 +36,7 @@ class CheckInResponseTest extends \PHPUnit_Framework_TestCase {
  		</ns1:NCIPMessage>';
 
 	public function testParseDummySuccessResponse() {
-		$dummy_response = new CustomXMLElement($this->dummy_response_success);
+		$dummy_response = new QuiteSimpleXMLElement($this->dummy_response_success);
 		$response = new CheckInResponse($dummy_response);
 
 		$this->assertInstanceOf('Danmichaelo\Ncip\CheckInResponse', $response);

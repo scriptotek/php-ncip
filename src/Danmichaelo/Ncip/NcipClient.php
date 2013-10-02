@@ -6,8 +6,8 @@
  * a small subset of the NCIP services.
  */
 
-use Danmichaelo\CustomXMLElement\CustomXMLElement,
-	Danmichaelo\CustomXMLElement\InvalidXMLException;
+use Danmichaelo\QuiteSimpleXMLElement\QuiteSimpleXMLElement,
+	Danmichaelo\QuiteSimpleXMLElement\InvalidXMLException;
 
 class NcipClient {
 
@@ -36,7 +36,7 @@ class NcipClient {
 			return null;
 		}
 		try {
-			$xml = new CustomXMLElement($xml);
+			$xml = new QuiteSimpleXMLElement($xml);
 		} catch (InvalidXMLException $e) {
 			throw new InvalidNcipResponseException('Invalid response received from the NCIP service "' . $this->connector->url . '". Did you configure it correctly?');
 		}

@@ -40,7 +40,7 @@ class NcipConnector {
 	 * Post xml document to the NCIP service
 	 *
 	 * @param  string  $request
-	 * @return CustomXMLElement
+	 * @return QuiteSimpleXMLElement
 	 */
 	public function post($request)
 	{

@@ -46,7 +46,7 @@ class CheckInResponse extends Response {
 	/**
 	 * Create a new Ncip user response
 	 *
-	 * @param  CustomXMLElement  $dom
+	 * @param  QuiteSimpleXMLElement  $dom
 	 * @return void
 	 */
 	public function __construct($dom)
