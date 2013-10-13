@@ -119,6 +119,33 @@ class NcipClient {
 	}
 
 	/**
+	 * Renew an item for a user
+	 *
+	 * @param  string  $user_id
+	 * @param  string  $item_id
+	 * @return CheckOutResponse
+	 */
+	public function renewItem($user_id, $item_id)
+	{
+		$request = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+			<ns1:NCIPMessage xmlns:ns1="http://www.niso.org/2008/ncip" ns1:version="http://www.niso.org/schemas/ncip/v2_01/ncip_v2_01.xsd">
+				<ns1:RenewItem>
+					<ns1:AuthenticationInput>
+						<ns1:AuthenticationInputData>' . $user_id . '</ns1:AuthenticationInputData>
+						<ns1:AuthenticationDataFormatType>text</ns1:AuthenticationDataFormatType>
+						<ns1:AuthenticationInputType>User Id</ns1:AuthenticationInputType>
+					</ns1:AuthenticationInput>
+					<ns1:ItemId>
+					   <ns1:ItemIdentifierValue>' . $item_id . '</ns1:ItemIdentifierValue>
+					</ns1:ItemId>
+				</ns1:RenewItem>
+			</ns1:NCIPMessage>';
+
+		$response = $this->parseResponse($this->connector->post($request));
+		return new RenewResponse($response);
+	}
+
+	/**
 	 * Lookup item information from item id
 	 *
 	 * @param  string  $item_id
