@@ -72,6 +72,7 @@ class CheckOutResponse extends Response {
 			} else {
 				$this->success = true;
 				$this->dueDate = $this->parseDateTime($this->dom->text('ns1:DateDue'));
+				$this->bibliographic = $this->parseBibliographicDescription($this->dom->first('ns1:ItemOptionalFields/ns1:BibliographicDescription'));
 			}
 		}
 
