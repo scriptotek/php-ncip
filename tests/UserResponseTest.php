@@ -96,16 +96,21 @@ class UserResponseTest extends \PHPUnit_Framework_TestCase {
 		$dummy_response = new QuiteSimpleXMLElement($this->dummy_response_success);
 		$response = new UserResponse($dummy_response);
 
+		$date1 = new \DateTime('2013-09-16T19:48:50+02:00');
+
 		$this->assertInstanceOf('Danmichaelo\Ncip\UserResponse', $response);
 		$this->assertTrue($response->exists);
 		$this->assertEquals('x', $response->agencyId);
-		$this->assertCount(1, $response->loanedItems);
 		$this->assertEquals('abcd010101', $response->userId);
 		$this->assertEquals('Donald', $response->firstName);
 		$this->assertEquals('Duck', $response->lastName);
 		$this->assertEquals('eng', $response->lang);
 		$this->assertEquals('d.duck@andenett.com', $response->email);
 		$this->assertEquals('10101010', $response->phone);
+
+		$this->assertCount(1, $response->loanedItems);
+		$this->assertEquals($date1->getTimestamp(), $response->loanedItems[0]['dateDue']->getTimestamp());
+
 	}
 
 	public function testParseDummyFailResponse() {
