@@ -27,22 +27,33 @@ and do `composer update`.
 
 ## Standalone use without Laravel:
 
-	require_once('vendor/autoload.php');
-	use Danmichaelo\Ncip\NcipClient;
+If you use the package *with* Laravel, options are pulled from `app/config/packages/danmichael/ncip/config.php` and the `NcipConnector` is injected into the `NcipClient` automatically.
+Otherwise, you have to do this manually, as shown below:
 
-	$options = array('url' => 'http://...', 'agency_id' => '...');
-	$ncip = new NcipClient($options);
+```php
+require_once('vendor/autoload.php');
+use Danmichaelo\Ncip\NcipConnector,
+    Danmichaelo\Ncip\NcipClient;
 
+$conn = new NcipConnector(array(
+	'url' => 'http://eksempel.com/NCIPResponder',
+	'user_agent' => 'My NCIP client/0.1'
+));
+$client = new NcipClient($conn, array(
+	'agency_id' => 'a'
+));
+```
 
 ## Example:
 
-	$ncip = new NcipClient();
-	$response = $ncip->lookupUser($user_id);
-	if ($response['exists']) {
-		echo 'Hello ' . $response->firstName . ' ' . $response->lastName;
-	else:
-		echo 'User not found';
-
+```php
+$client = new NcipClient();
+$response = $client->lookupUser($user_id);
+if ($response['exists']) {
+	echo 'Hello ' . $response->firstName . ' ' . $response->lastName;
+else:
+	echo 'User not found';
+```
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/danmichaelo/ncip/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
