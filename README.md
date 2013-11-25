@@ -48,9 +48,9 @@ $client = new NcipClient($conn, array(
 
 ```php
 $client = new NcipClient();
-$response = $client->lookupUser($user_id);
-if ($response['exists']) {
-	echo 'Hello ' . $response->firstName . ' ' . $response->lastName;
+$user = $client->lookupUser('abc123');
+if ($user->exists) {
+	echo 'Hello ' . $user->firstName . ' ' . $user->lastName;
 else:
 	echo 'User not found';
 ```
