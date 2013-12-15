@@ -23,7 +23,7 @@
     },
     "autoload": {
         "psr-0": {
-            "Danmichaelo\\Ncip": "src/"
+            "Danmichaelo\\Ncip\\": "src/"
         }
     },
     "minimum-stability": "dev"
