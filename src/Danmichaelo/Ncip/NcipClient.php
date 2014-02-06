@@ -6,6 +6,8 @@
  * a small subset of the NCIP services.
  */
 
+use Danmichaelo\QuiteSimpleXMLElement\InvalidXMLException;
+
 class NcipClient extends NcipService {
 
 	protected $agency_id;
@@ -33,7 +35,11 @@ class NcipClient extends NcipService {
 	 */
 	public function post(Request $request)
 	{
-		return $this->parseXml($this->connector->post($request));
+		try {
+			return $this->parseXml($this->connector->post($request));
+		} catch (InvalidXMLException $e) {
+			throw new InvalidNcipResponseException('Invalid response received from the NCIP service "' . $this->connector->url . '". Did you configure it correctly?');
+		}
 	}
 
 	/**
@@ -71,7 +77,7 @@ class NcipClient extends NcipService {
 				</ns1:CheckOutItem>
 			</ns1:NCIPMessage>';
 
-		$response = $this->parseXml($this->connector->post($request));
+		$response = $this->post($request);
 		return new CheckOutResponse($response);
 	}
 
@@ -93,7 +99,7 @@ class NcipClient extends NcipService {
 				</ns1:CheckInItem>
 			</ns1:NCIPMessage>';
 
-		$response = $this->parseXml($this->connector->post($request));
+		$response = $this->post($request);
 		return new CheckInResponse($response);
 	}
 
@@ -120,7 +126,7 @@ class NcipClient extends NcipService {
 				</ns1:RenewItem>
 			</ns1:NCIPMessage>';
 
-		$response = $this->parseXml($this->connector->post($request));
+		$response = $this->post($request);
 		return new RenewResponse($response);
 	}
 
@@ -142,7 +148,7 @@ class NcipClient extends NcipService {
 				</ns1:LookupItem>
 			</ns1:NCIPMessage>';
 
-		$response = $this->parseXml($this->connector->post($request));
+		$response = $this->post($request);
 		return new ItemResponse($response);
 	}
 

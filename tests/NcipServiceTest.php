@@ -16,16 +16,7 @@ class NcipServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertInstanceOf('Danmichaelo\QuiteSimpleXMLElement\QuiteSimpleXMLElement', $xml);
 
 		$msg = $xml->first('/ns1:NCIPMessage');
-		$this->assertEquals(1, $msg->count());
-	}
-
-	/**
-	 * @expectedException Danmichaelo\Ncip\InvalidNcipResponseException
-	 */
-	public function testInvalidXml() {
-		$this->service->parseXml('
-			<ns1:NCIPMess
-		');
+		$this->assertEquals(1, $msg->count('ns1'));
 	}
 
 }

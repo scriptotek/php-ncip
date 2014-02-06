@@ -6,8 +6,7 @@
  * a small subset of the NCIP services.
  */
 
-use Danmichaelo\QuiteSimpleXMLElement\QuiteSimpleXMLElement,
-	Danmichaelo\QuiteSimpleXMLElement\InvalidXMLException;
+use Danmichaelo\QuiteSimpleXMLElement\QuiteSimpleXMLElement;
 
 class NcipService {
 
@@ -39,6 +38,7 @@ class NcipService {
 
 	/**
 	 * Parses an XML-formatted NCIP request or response
+	 * Throws Danmichaelo\QuiteSimpleXMLElement\InvalidXMLException on failure
 	 *
 	 * @param  string   $xml
 	 * @return QuiteSimpleXMLElement
@@ -48,14 +48,8 @@ class NcipService {
 		if (is_null($xml)) {
 			return null;
 		}
-		try {
-			$xml = new QuiteSimpleXMLElement($xml);
-		} catch (InvalidXMLException $e) {
-			throw new InvalidNcipResponseException('Invalid response received from the NCIP service "' . $this->connector->url . '". Did you configure it correctly?');
-		}
-
+		$xml = new QuiteSimpleXMLElement($xml);
 		$xml->registerXPathNamespaces($this->namespaces);
-
 		return $xml;
 	}
 

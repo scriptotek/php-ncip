@@ -102,4 +102,15 @@ class NcipClientTest extends \PHPUnit_Framework_TestCase {
 
 	}
 
+
+	/**
+ 	 * @expectedException Danmichaelo\Ncip\InvalidNcipResponseException
+ 	 */
+	public function testInvalidResponse() {
+		$this->setupMock('
+			<ns1:NCIPMess
+		');
+
+		$response = $this->ncip->lookupUser('test123456');
+	}
 }
