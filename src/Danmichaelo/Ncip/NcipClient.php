@@ -9,7 +9,7 @@
 use Danmichaelo\QuiteSimpleXMLElement\QuiteSimpleXMLElement,
 	Danmichaelo\QuiteSimpleXMLElement\InvalidXMLException;
 
-class NcipClient {
+class NcipClient extends NcipService {
 
 	protected $agency_id;
 	protected $connector;
@@ -24,28 +24,20 @@ class NcipClient {
 	 */
 	public function __construct(NcipConnector $connector = null, $options = array())
 	{
-		$this->agency_id = array_get($options, 'agency_id', Config::get('ncip::agency_id'));
 		$this->connector = $connector ?: new NcipConnector;
-		$this->namespaces = array_get($options, 'namespaces',
-			array('ns1' => 'http://www.niso.org/2008/ncip'));
+		parent::__construct($options);
 	}
 
-	protected function parseResponse($xml)
+	/**
+	 * Make a POST request to the NCIP server and return the response
+	 *
+	 * @param  Request
+	 * @return QuiteSimpleXMLElement
+	 */
+	public function post(Request $request)
 	{
-		if (is_null($xml)) {
-			return null;
-		}
-		try {
-			$xml = new QuiteSimpleXMLElement($xml);
-		} catch (InvalidXMLException $e) {
-			throw new InvalidNcipResponseException('Invalid response received from the NCIP service "' . $this->connector->url . '". Did you configure it correctly?');
-		}
-
-		$xml->registerXPathNamespaces($this->namespaces);
-
-		return $xml;
+		return $this->parseXml($this->connector->post($request));
 	}
-
 
 	/**
 	 * Lookup user information from user id
@@ -55,18 +47,8 @@ class NcipClient {
 	 */
 	public function lookupUser($user_id)
 	{
-		$request = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-		<ns1:NCIPMessage xmlns:ns1="http://www.niso.org/2008/ncip" ns1:version="http://www.niso.org/schemas/ncip/v2_01/ncip_v2_01.xsd">
-			<ns1:LookupUser>
-				<ns1:UserId>
-					<ns1:UserIdentifierValue>' . $user_id . '</ns1:UserIdentifierValue>
-				</ns1:UserId>
-				<ns1:LoanedItemsDesired/>
-				<ns1:RequestedItemsDesired/>
-			</ns1:LookupUser>
-		</ns1:NCIPMessage>';
-
-		$response = $this->parseResponse($this->connector->post($request));
+		$request = new UserRequest($user_id);
+		$response = $this->post($request);
 		return new UserResponse($response);
 	}
 
@@ -92,7 +74,7 @@ class NcipClient {
 				</ns1:CheckOutItem>
 			</ns1:NCIPMessage>';
 
-		$response = $this->parseResponse($this->connector->post($request));
+		$response = $this->parseXml($this->connector->post($request));
 		return new CheckOutResponse($response);
 	}
 
@@ -114,7 +96,7 @@ class NcipClient {
 				</ns1:CheckInItem>
 			</ns1:NCIPMessage>';
 
-		$response = $this->parseResponse($this->connector->post($request));
+		$response = $this->parseXml($this->connector->post($request));
 		return new CheckInResponse($response);
 	}
 
@@ -141,7 +123,7 @@ class NcipClient {
 				</ns1:RenewItem>
 			</ns1:NCIPMessage>';
 
-		$response = $this->parseResponse($this->connector->post($request));
+		$response = $this->parseXml($this->connector->post($request));
 		return new RenewResponse($response);
 	}
 
@@ -163,7 +145,7 @@ class NcipClient {
 				</ns1:LookupItem>
 			</ns1:NCIPMessage>';
 
-		$response = $this->parseResponse($this->connector->post($request));
+		$response = $this->parseXml($this->connector->post($request));
 		return new ItemResponse($response);
 	}
 
