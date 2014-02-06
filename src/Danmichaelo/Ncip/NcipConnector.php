@@ -39,11 +39,14 @@ class NcipConnector {
 	/**
 	 * Post xml document to the NCIP service
 	 *
-	 * @param  string  $request
+	 * @param  Request  $request
 	 * @return QuiteSimpleXMLElement
 	 */
 	public function post($request)
 	{
+		if ($request instanceof Request) {
+			$request = $request->xml();
+		}
 
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $this->url);

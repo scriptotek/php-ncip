@@ -6,9 +6,6 @@
  * a small subset of the NCIP services.
  */
 
-use Danmichaelo\QuiteSimpleXMLElement\QuiteSimpleXMLElement,
-	Danmichaelo\QuiteSimpleXMLElement\InvalidXMLException;
-
 class NcipClient extends NcipService {
 
 	protected $agency_id;
@@ -32,7 +29,7 @@ class NcipClient extends NcipService {
 	 * Make a POST request to the NCIP server and return the response
 	 *
 	 * @param  Request
-	 * @return QuiteSimpleXMLElement
+	 * @return Danmichaelo\QuiteSimpleXMLElement\QuiteSimpleXMLElement
 	 */
 	public function post(Request $request)
 	{

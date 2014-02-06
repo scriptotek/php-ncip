@@ -43,7 +43,7 @@ class NcipService {
 	 * @param  string   $xml
 	 * @return QuiteSimpleXMLElement
 	 */
-	protected function parseXml($xml)
+	public function parseXml($xml)
 	{
 		if (is_null($xml)) {
 			return null;
