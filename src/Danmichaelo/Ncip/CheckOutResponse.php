@@ -55,7 +55,7 @@ class CheckOutResponse extends Response {
 	 * @param  QuiteSimpleXMLElement  $dom
 	 * @return void
 	 */
-	public function __construct($dom)
+	public function __construct($dom = null)
 	{
 
 		if (is_null($dom)) {
