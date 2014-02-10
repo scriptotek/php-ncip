@@ -10,9 +10,7 @@ use Danmichaelo\QuiteSimpleXMLElement\InvalidXMLException;
 
 class NcipClient extends NcipService {
 
-	protected $agency_id;
 	protected $connector;
-	protected $namespaces;
 
 	/**
 	 * Create a new Ncip client
@@ -21,10 +19,10 @@ class NcipClient extends NcipService {
 	 * @param  array   $options
 	 * @return void
 	 */
-	public function __construct(NcipConnector $connector = null, $options = array())
+	public function __construct(NcipConnector $connector, $agency_id)
 	{
-		$this->connector = $connector ?: new NcipConnector;
-		parent::__construct($options);
+		$this->connector = $connector;
+		parent::__construct($agency_id);
 	}
 
 	/**
@@ -38,7 +36,10 @@ class NcipClient extends NcipService {
 		try {
 			return $this->parseXml($this->connector->post($request));
 		} catch (InvalidXMLException $e) {
-			throw new InvalidNcipResponseException('Invalid response received from the NCIP service "' . $this->connector->url . '". Did you configure it correctly?');
+			throw new InvalidNcipResponseException(
+				'Invalid response received from the NCIP service ' . '"' .
+				$this->connector->url . '". Did you configure it correctly?'
+			);
 		}
 	}
 
@@ -64,19 +65,7 @@ class NcipClient extends NcipService {
 	 */
 	public function checkOutItem($user_id, $item_id)
 	{
-		$request = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-			<ns1:NCIPMessage xmlns:ns1="http://www.niso.org/2008/ncip" ns1:version="http://www.niso.org/schemas/ncip/v2_01/ncip_v2_01.xsd">
-				<ns1:CheckOutItem>
-					<ns1:UserId>
-						<ns1:UserIdentifierValue>' . $user_id . '</ns1:UserIdentifierValue>
-					</ns1:UserId>
-					<ns1:ItemId>
-					   <ns1:AgencyId>' . $this->agency_id . '</ns1:AgencyId>
-					   <ns1:ItemIdentifierValue>' . $item_id . '</ns1:ItemIdentifierValue>
-					</ns1:ItemId>
-				</ns1:CheckOutItem>
-			</ns1:NCIPMessage>';
-
+		$request = new CheckOutRequest($this->agency_id, $user_id, $item_id);
 		$response = $this->post($request);
 		return new CheckOutResponse($response);
 	}
@@ -89,16 +78,7 @@ class NcipClient extends NcipService {
 	 */
 	public function checkInItem($item_id)
 	{
-		$request = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-			<ns1:NCIPMessage xmlns:ns1="http://www.niso.org/2008/ncip" ns1:version="http://www.niso.org/schemas/ncip/v2_01/ncip_v2_01.xsd">
-				<ns1:CheckInItem>
-					<ns1:ItemId>
-					   <ns1:AgencyId>' . $this->agency_id . '</ns1:AgencyId>
-					   <ns1:ItemIdentifierValue>' . $item_id . '</ns1:ItemIdentifierValue>
-					</ns1:ItemId>
-				</ns1:CheckInItem>
-			</ns1:NCIPMessage>';
-
+		$request = new CheckInRequest($this->agency_id, $item_id);
 		$response = $this->post($request);
 		return new CheckInResponse($response);
 	}
@@ -112,22 +92,9 @@ class NcipClient extends NcipService {
 	 */
 	public function renewItem($user_id, $item_id)
 	{
-		$request = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-			<ns1:NCIPMessage xmlns:ns1="http://www.niso.org/2008/ncip" ns1:version="http://www.niso.org/schemas/ncip/v2_01/ncip_v2_01.xsd">
-				<ns1:RenewItem>
-					<ns1:AuthenticationInput>
-						<ns1:AuthenticationInputData>' . $user_id . '</ns1:AuthenticationInputData>
-						<ns1:AuthenticationDataFormatType>text</ns1:AuthenticationDataFormatType>
-						<ns1:AuthenticationInputType>User Id</ns1:AuthenticationInputType>
-					</ns1:AuthenticationInput>
-					<ns1:ItemId>
-					   <ns1:ItemIdentifierValue>' . $item_id . '</ns1:ItemIdentifierValue>
-					</ns1:ItemId>
-				</ns1:RenewItem>
-			</ns1:NCIPMessage>';
-
+		$request = new RenewRequest($user_id, $item_id);
 		$response = $this->post($request);
-		return new RenewResponse($response);
+		return new ReenewResponse($response);
 	}
 
 	/**
@@ -138,16 +105,7 @@ class NcipClient extends NcipService {
 	 */
 	public function lookupItem($item_id)
 	{
-		$request = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-			<ns1:NCIPMessage xmlns:ns1="http://www.niso.org/2008/ncip" ns1:version="http://www.niso.org/schemas/ncip/v2_01/ncip_v2_01.xsd">
-				<ns1:LookupItem>
-					<ns1:ItemId>
-					   <ns1:ItemIdentifierType>Accession Number</ns1:ItemIdentifierType>
-					   <ns1:ItemIdentifierValue>' . $item_id . '</ns1:ItemIdentifierValue>
-					</ns1:ItemId>
-				</ns1:LookupItem>
-			</ns1:NCIPMessage>';
-
+		$request = new ItemRequest($item_id);
 		$response = $this->post($request);
 		return new ItemResponse($response);
 	}

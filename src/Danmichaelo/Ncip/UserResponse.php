@@ -19,6 +19,51 @@ class UserResponse extends Response {
 	public $phone;
 
 	protected $dom;
+	protected $template = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+		<ns1:NCIPMessage xmlns:ns1="http://www.niso.org/2008/ncip">
+		   <ns1:LookupUserResponse>
+		      <ns1:UserId>
+		         <ns1:AgencyId>{{agencyId}}</ns1:AgencyId>
+		         <ns1:UserIdentifierValue>{{userId}}</ns1:UserIdentifierValue>
+		      </ns1:UserId>
+		      {{loanedItems}}
+		      <ns1:UserOptionalFields>
+		         <ns1:NameInformation>
+		            <ns1:PersonalNameInformation>
+		               <ns1:StructuredPersonalUserName>
+		                  <ns1:GivenName>{{firstName}}</ns1:GivenName>
+		                  <ns1:Surname>{{lastName}}</ns1:Surname>
+		               </ns1:StructuredPersonalUserName>
+		            </ns1:PersonalNameInformation>
+		         </ns1:NameInformation>
+		         <ns1:UserAddressInformation>
+		            <ns1:UserAddressRoleType>mailto</ns1:UserAddressRoleType>
+		            <ns1:ElectronicAddress>
+		               <ns1:ElectronicAddressType>mailto</ns1:ElectronicAddressType>
+		               <ns1:ElectronicAddressData>{{email}}</ns1:ElectronicAddressData>
+		            </ns1:ElectronicAddress>
+		         </ns1:UserAddressInformation>
+		         <ns1:UserAddressInformation>
+		            <ns1:UserAddressRoleType>sms</ns1:UserAddressRoleType>
+		            <ns1:ElectronicAddress>
+		               <ns1:ElectronicAddressType>sms</ns1:ElectronicAddressType>
+		               <ns1:ElectronicAddressData>{{phone}}</ns1:ElectronicAddressData>
+		            </ns1:ElectronicAddress>
+		         </ns1:UserAddressInformation>
+		         <ns1:UserAddressInformation>
+		            <ns1:UserAddressRoleType>Permanent</ns1:UserAddressRoleType>
+		            <ns1:PhysicalAddress>
+		               <ns1:UnstructuredAddress>
+		                  <ns1:UnstructuredAddressType>Newline-Delimited Text</ns1:UnstructuredAddressType>
+		                  <ns1:UnstructuredAddressData>{{address}}</ns1:UnstructuredAddressData>
+		               </ns1:UnstructuredAddress>
+		               <ns1:PhysicalAddressType>Postal Address</ns1:PhysicalAddressType>
+		            </ns1:PhysicalAddress>
+		         </ns1:UserAddressInformation>
+		         <ns1:UserLanguage>eng</ns1:UserLanguage>
+		      </ns1:UserOptionalFields>
+		   </ns1:LookupUserResponse>
+		</ns1:NCIPMessage>';
 
 	/**
 	 * Create a new Ncip user response
@@ -64,6 +109,23 @@ class UserResponse extends Response {
 
 		}
 
+	}
+
+	/**
+	 * Return a XML representation of the request
+	 */
+	public function xml()
+	{
+		$s = $this->template;
+		$s = str_replace('{{agencyId}}', $agencyId, $s);
+		$s = str_replace('{{userId}}', $userId, $s);
+		$s = str_replace('{{loanedItems}}', '', $s);
+		$s = str_replace('{{lastName}}', $this->lastName, $s);
+		$s = str_replace('{{firstName}}', $this->firstName, $s);
+		$s = str_replace('{{email}}', $this->email, $s);
+		$s = str_replace('{{phone}}', $this->phone, $s);
+		//$s = str_replace('{{address}}', $this->address, $s);
+		return $s;
 	}
 
 }

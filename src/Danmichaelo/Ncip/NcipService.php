@@ -10,30 +10,22 @@ use Danmichaelo\QuiteSimpleXMLElement\QuiteSimpleXMLElement;
 
 class NcipService {
 
-	protected $agency_id;
-	protected $namespaces;
+	public $agency_id;
+	public $namespaces;
 
 	/**
 	 * Create a new Ncip server
 	 *
-	 * @param  array   $options
+	 * @param  string   $agency_id
 	 * @return void
 	 */
-	public function __construct($options = array())
+	public function __construct($agency_id)
 	{
-		if (isset($options['agency_id'])) {
-			$this->agency_id = $options['agency_id'];
-		} else {
-			$this->agency_id = Config::get('ncip::agency_id');
-			// if (class_exists('Config')) {
-			// 	$this->agency_id = Config::get('ncip::agency_id');
-			// } else {
-			// 	throw new \Exception('No agency_id set');
-			// }
-		}
+		$this->agency_id = $this->agency_id;
 
-		$this->namespaces = array_get($options, 'namespaces',
-			array('ns1' => 'http://www.niso.org/2008/ncip'));
+		$this->namespaces = array(
+			'ns1' => 'http://www.niso.org/2008/ncip'
+		);
 	}
 
 	/**

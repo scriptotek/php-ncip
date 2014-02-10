@@ -6,18 +6,6 @@
  * a small subset of the NCIP services.
  */
 
-class Config {
-
-	static function get($key) {
-		if (class_exists('\Config')) {
-			return \Config::get($key);
-		} else {
-			return null;
-		}
-	}
-
-}
-
 class NcipConnector {
 
 	public $url;
@@ -30,10 +18,10 @@ class NcipConnector {
 	 * @param  array   $options
 	 * @return void
 	 */
-	public function __construct($options = array())
+	public function __construct($url, $user_agent)
 	{
-		$this->url = array_get($options, 'url', Config::get('ncip::url'));
-		$this->user_agent = array_get($options, 'user_agent', Config::get('ncip::user_agent'));
+		$this->url = $url;
+		$this->user_agent = $user_agent;
 	}
 
 	/**

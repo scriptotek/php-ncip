@@ -3,6 +3,9 @@
 use Mockery as m;
 
 class NcipClientTest extends \PHPUnit_Framework_TestCase {
+
+	protected $agencyId;
+	protected $ncip;
 	
 	protected function setUp() {
 
@@ -10,12 +13,12 @@ class NcipClientTest extends \PHPUnit_Framework_TestCase {
 
 	public function setUpMock($xml_response)
 	{
-
 		$mock = m::mock('Danmichaelo\Ncip\NcipConnector');
 		$mock->shouldReceive('post')
 			->once()
 			->andReturn($xml_response);
-		$this->ncip = new NcipClient($mock);
+		$this->agencyId = 'x';
+		$this->ncip = new NcipClient($mock, $this->agencyId);
 	}
 
 	public function testLookupUser() {

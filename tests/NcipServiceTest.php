@@ -2,8 +2,11 @@
 
 class NcipServiceTest extends \PHPUnit_Framework_TestCase {
 
+	protected $agencyId;
+
 	protected function setUp() {
-		$this->service = new NcipService;
+		$this->agencyId = 'x';
+		$this->service = new NcipService($this->agencyId);
 	}
 
 	public function testParseXml() {
