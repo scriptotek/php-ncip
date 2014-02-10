@@ -17,6 +17,7 @@ class UserResponse extends Response {
 	public $loanedItems;
 	public $email;
 	public $phone;
+	public $postalAddress;
 
 	protected $dom;
 	protected $template = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -26,7 +27,6 @@ class UserResponse extends Response {
 		         <ns1:AgencyId>{{agencyId}}</ns1:AgencyId>
 		         <ns1:UserIdentifierValue>{{userId}}</ns1:UserIdentifierValue>
 		      </ns1:UserId>
-		      {{loanedItems}}
 		      <ns1:UserOptionalFields>
 		         <ns1:NameInformation>
 		            <ns1:PersonalNameInformation>
@@ -55,15 +55,47 @@ class UserResponse extends Response {
 		            <ns1:PhysicalAddress>
 		               <ns1:UnstructuredAddress>
 		                  <ns1:UnstructuredAddressType>Newline-Delimited Text</ns1:UnstructuredAddressType>
-		                  <ns1:UnstructuredAddressData>{{address}}</ns1:UnstructuredAddressData>
+		                  <ns1:UnstructuredAddressData>{{postalAddress}}</ns1:UnstructuredAddressData>
 		               </ns1:UnstructuredAddress>
 		               <ns1:PhysicalAddressType>Postal Address</ns1:PhysicalAddressType>
 		            </ns1:PhysicalAddress>
 		         </ns1:UserAddressInformation>
 		         <ns1:UserLanguage>eng</ns1:UserLanguage>
-		      </ns1:UserOptionalFields>
+		      </ns1:UserOptionalFields>{{loanedItems}}
 		   </ns1:LookupUserResponse>
 		</ns1:NCIPMessage>';
+
+	protected $loanTemplate = '
+		      <ns1:LoanedItem>
+		         <ns1:ItemId>
+		            <ns1:ItemIdentifierValue>{{id}}</ns1:ItemIdentifierValue>
+		         </ns1:ItemId>
+		         <ns1:ReminderLevel>{{reminderLevel}}</ns1:ReminderLevel>
+		         <ns1:DateDue>{{dateDue}}</ns1:DateDue>
+		         <ns1:Amount>
+		            <ns1:CurrencyCode>NOK</ns1:CurrencyCode>
+		            <ns1:MonetaryValue>0</ns1:MonetaryValue>
+		         </ns1:Amount>
+		         <ns1:Title>{{title}}</ns1:Title>
+		      </ns1:LoanedItem>';
+		      /* Not implemented yet:
+		      <ns1:Ext>
+		            <ns1:BibliographicDescription>
+		               <ns1:Author>Hirvensalo, Mika</ns1:Author>
+		               <ns1:BibliographicRecordId>
+		                  <ns1:BibliographicRecordIdentifier>000719641</ns1:BibliographicRecordIdentifier>
+		                  <ns1:BibliographicRecordIdentifierCode>Accession Number</ns1:BibliographicRecordIdentifierCode>
+		               </ns1:BibliographicRecordId>
+		               <ns1:Edition/>
+		               <ns1:Pagination>XI, 190 s.</ns1:Pagination>
+		               <ns1:PublicationDate>2001</ns1:PublicationDate>
+		               <ns1:Publisher>Springer</ns1:Publisher>
+		               <ns1:Title>Quantum computing</ns1:Title>
+		               <ns1:Language>eng</ns1:Language>
+		               <ns1:MediumType>Book</ns1:MediumType>
+		            </ns1:BibliographicDescription>
+		         </ns1:Ext>
+		         */
 
 	/**
 	 * Create a new Ncip user response
@@ -73,6 +105,7 @@ class UserResponse extends Response {
 	 */
 	public function __construct($dom = null)
 	{
+		$this->loanedItems = array();
 		if (is_null($dom)) return;
 
 		$this->dom = $dom->first('/ns1:NCIPMessage/ns1:LookupUserResponse');
@@ -86,6 +119,7 @@ class UserResponse extends Response {
 			$this->agencyId = $this->dom->text('ns1:UserId/ns1:AgencyId');
 			$this->firstName = $uinfo->text('ns1:NameInformation/ns1:PersonalNameInformation/ns1:StructuredPersonalUserName/ns1:GivenName');
 			$this->lastName = $uinfo->text('ns1:NameInformation/ns1:PersonalNameInformation/ns1:StructuredPersonalUserName/ns1:Surname');
+			$this->postalAddress = $uinfo->text('ns1:UserAddressInformation/ns1:PhysicalAddress/ns1:UnstructuredAddress/ns1:UnstructuredAddressData');
 			$this->lang = $uinfo->text('ns1:UserLanguage');
 			$this->loanedItems = array();
 
@@ -116,15 +150,25 @@ class UserResponse extends Response {
 	 */
 	public function xml()
 	{
+		$userFields = array('agencyId', 'userId', 'firstName', 'lastName', 'email', 'phone', 'postalAddress');
+		$loanFields = array('id', 'reminderLevel', 'title');
+
+		$loanedItems = '';
+		foreach ($this->loanedItems as $item) {
+			$s = $this->loanTemplate;
+			foreach ($loanFields as $field) {
+				$s = str_replace('{{' . $field . '}}', $item[$field], $s);
+			}
+			$s = str_replace('{{dateDue}}', $this->formatDateTime($item['dateDue']), $s);
+			$loanedItems .= $s;
+		}
+
 		$s = $this->template;
-		$s = str_replace('{{agencyId}}', $agencyId, $s);
-		$s = str_replace('{{userId}}', $userId, $s);
-		$s = str_replace('{{loanedItems}}', '', $s);
-		$s = str_replace('{{lastName}}', $this->lastName, $s);
-		$s = str_replace('{{firstName}}', $this->firstName, $s);
-		$s = str_replace('{{email}}', $this->email, $s);
-		$s = str_replace('{{phone}}', $this->phone, $s);
-		//$s = str_replace('{{address}}', $this->address, $s);
+		foreach ($userFields as $field) {
+			$s = str_replace('{{' . $field . '}}', $this->{$field}, $s);
+		}
+		$s = str_replace('{{loanedItems}}', $loanedItems, $s);
+
 		return $s;
 	}
 

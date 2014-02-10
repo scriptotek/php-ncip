@@ -5,8 +5,8 @@ use Danmichaelo\QuiteSimpleXMLElement\QuiteSimpleXMLElement;
 
 class UserResponseTest extends \PHPUnit_Framework_TestCase {
 
-	protected $dummy_response_success = '
-		<ns1:NCIPMessage xmlns:ns1="http://www.niso.org/2008/ncip">
+	protected $dummy_response_success = "
+		<ns1:NCIPMessage xmlns:ns1=\"http://www.niso.org/2008/ncip\">
 		   <ns1:LookupUserResponse>
 		      <ns1:UserId>
 		         <ns1:AgencyId>x</ns1:AgencyId>
@@ -68,8 +68,7 @@ class UserResponseTest extends \PHPUnit_Framework_TestCase {
 		            <ns1:PhysicalAddress>
 		               <ns1:UnstructuredAddress>
 		                  <ns1:UnstructuredAddressType>Newline-Delimited Text</ns1:UnstructuredAddressType>
-		                  <ns1:UnstructuredAddressData>Apalveien 13
-		0123 Andeby</ns1:UnstructuredAddressData>
+		                  <ns1:UnstructuredAddressData>Apalveien 13\n0123 Andeby</ns1:UnstructuredAddressData>
 		               </ns1:UnstructuredAddress>
 		               <ns1:PhysicalAddressType>Postal Address</ns1:PhysicalAddressType>
 		            </ns1:PhysicalAddress>
@@ -78,7 +77,7 @@ class UserResponseTest extends \PHPUnit_Framework_TestCase {
 		      </ns1:UserOptionalFields>
 		   </ns1:LookupUserResponse>
 		</ns1:NCIPMessage>
- 	  ';
+ 	  ";
 
 	protected $dummy_response_fail = '
 		<ns1:NCIPMessage xmlns:ns1="http://www.niso.org/2008/ncip">
@@ -107,6 +106,7 @@ class UserResponseTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals('eng', $response->lang);
 		$this->assertEquals('d.duck@andenett.com', $response->email);
 		$this->assertEquals('10101010', $response->phone);
+		$this->assertEquals("Apalveien 13\n0123 Andeby", $response->postalAddress);
 
 		$this->assertCount(1, $response->loanedItems);
 		$this->assertEquals($date1->getTimestamp(), $response->loanedItems[0]['dateDue']->getTimestamp());
@@ -126,6 +126,29 @@ class UserResponseTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertInstanceOf('Danmichaelo\Ncip\UserResponse', $response);
 		$this->assertFalse($response->exists);
+	}
+
+	public function testXml()
+	{
+		$response = new UserResponse;
+		$response->firstName = 'Meriadoc';
+		$response->lastName = 'Brandybuck';
+		$response->email = 'meriadoc.brandybuck@hobb.it';
+		$response->loanedItems = array(
+			array(
+				'id' => '13k115558', 
+				'dateDue' => new \DateTime('2014-12-12T00:00:00+02:00'), 
+				'reminderLevel' => 2, 
+				'title' => 'Neutrino cosmology'
+			)
+		);
+		$xml = $response->xml();
+
+		$this->assertContains('<ns1:GivenName>Meriadoc</ns1:GivenName>', $xml);
+		$this->assertContains('<ns1:Surname>Brandybuck</ns1:Surname>', $xml);
+		$this->assertContains('<ns1:ElectronicAddressData>meriadoc.brandybuck@hobb.it</ns1:ElectronicAddressData>', $xml);
+		$this->assertContains('<ns1:ReminderLevel>2</ns1:ReminderLevel>', $xml);
+		$this->assertContains('<ns1:DateDue>2014-12-12T00:00:00+0200</ns1:DateDue>', $xml);
 	}
 
 }

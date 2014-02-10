@@ -5,7 +5,11 @@ class Response {
 	protected $dom;
 
 	public function parseDateTime($datestring) {
-		return \DateTime::createFromFormat('Y-m-d?H:i:s.ue', $datestring);
+		return new \DateTime($datestring);
+	}
+
+	public function formatDateTime($datetime) {
+		return $datetime->format(\DateTime::ISO8601); // does not include milliseconds
 	}
 
 	protected function parseBibliographicDescription($b)
