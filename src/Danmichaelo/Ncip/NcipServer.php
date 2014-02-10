@@ -11,12 +11,11 @@ class NcipServer extends NcipService {
 	/**
 	 * Create a new Ncip server
 	 *
-	 * @param  string   $agency_id
 	 * @return void
 	 */
-	public function __construct($agency_id)
+	public function __construct()
 	{
-		parent::__construct($agency_id);
+		parent::__construct();
 	}
 
 	public function parseRequest($xml)

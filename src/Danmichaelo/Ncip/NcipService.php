@@ -10,18 +10,15 @@ use Danmichaelo\QuiteSimpleXMLElement\QuiteSimpleXMLElement;
 
 class NcipService {
 
-	public $agency_id;
 	public $namespaces;
 
 	/**
 	 * Create a new Ncip server
 	 *
-	 * @param  string   $agency_id
 	 * @return void
 	 */
-	public function __construct($agency_id)
+	public function __construct()
 	{
-		$this->agency_id = $this->agency_id;
 
 		$this->namespaces = array(
 			'ns1' => 'http://www.niso.org/2008/ncip'

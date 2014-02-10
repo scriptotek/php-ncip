@@ -10,18 +10,21 @@ class NcipConnector {
 
 	public $url;
 	public $user_agent;
+	public $agency_id;
 
 	/**
 	 * Create a new Ncip connector
 	 *
 	 * @param  string  $url
-	 * @param  array   $options
+	 * @param  string  $user_agent
+	 * @param  string  $agency_id
 	 * @return void
 	 */
-	public function __construct($url, $user_agent)
+	public function __construct($url, $user_agent, $agency_id)
 	{
 		$this->url = $url;
 		$this->user_agent = $user_agent;
+		$this->agency_id = $agency_id;
 	}
 
 	/**

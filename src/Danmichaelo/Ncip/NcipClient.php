@@ -19,10 +19,10 @@ class NcipClient extends NcipService {
 	 * @param  array   $options
 	 * @return void
 	 */
-	public function __construct(NcipConnector $connector, $agency_id)
+	public function __construct(NcipConnector $connector)
 	{
 		$this->connector = $connector;
-		parent::__construct($agency_id);
+		parent::__construct();
 	}
 
 	/**
