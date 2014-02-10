@@ -1,8 +1,8 @@
 # Basic NCIP php library and Laravel package
 
-[![Build Status](https://travis-ci.org/danmichaelo/ncip.png?branch=master)](https://travis-ci.org/danmichaelo/ncip)
-[![Coverage Status](https://coveralls.io/repos/danmichaelo/ncip/badge.png?branch=master)](https://coveralls.io/r/danmichaelo/ncip?branch=master)
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/danmichaelo/ncip/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+[![Build Status](https://travis-ci.org/danmichaelo/php-ncip.png?branch=master)](https://travis-ci.org/danmichaelo/php-ncip)
+[![Coverage Status](https://coveralls.io/repos/danmichaelo/php-ncip/badge.png?branch=master)](https://coveralls.io/r/danmichaelo/php-ncip?branch=master)
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/danmichaelo/php-ncip/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 This package currently only implements a small subset of the NCIP specification.
 Focus has been on providing a simple API rather than completeness.
