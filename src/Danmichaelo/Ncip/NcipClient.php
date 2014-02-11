@@ -94,7 +94,7 @@ class NcipClient extends NcipService {
 	{
 		$request = new RenewRequest($user_id, $item_id);
 		$response = $this->post($request);
-		return new ReenewResponse($response);
+		return new RenewResponse($response);
 	}
 
 	/**
