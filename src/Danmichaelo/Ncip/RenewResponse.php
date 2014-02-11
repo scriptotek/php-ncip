@@ -40,9 +40,33 @@
 class RenewResponse extends Response {
 
 	public $success;
-	public $error;
+	public $id;
 	public $dueDate;
+	public $error;
+	public $errorDetails;
 
+	protected $template = '
+ 		  <ns1:NCIPMessage xmlns:ns1="http://www.niso.org/2008/ncip">
+ 		     <ns1:RenewItemResponse>{{main}}
+ 		      <ns1:Ext>
+ 		         <ns1:UserOptionalFields>
+ 		            <ns1:UserLanguage>{{language}}</ns1:UserLanguage>
+ 		         </ns1:UserOptionalFields>
+ 		      </ns1:Ext>
+ 		     </ns1:RenewItemResponse>
+ 		  </ns1:NCIPMessage>';
+
+	protected $template_success = '
+ 		        <ns1:ItemId>
+ 		           <ns1:ItemIdentifierValue>{{id}}</ns1:ItemIdentifierValue>
+ 		        </ns1:ItemId>
+ 		        <ns1:DateDue>{{dateDue}}</ns1:DateDue>';
+
+	protected $template_failure = '
+ 		      <ns1:Problem>
+ 		         <ns1:ProblemType>{{error}}</ns1:ProblemType>
+ 		         <ns1:ProblemDetail>{{errorDetails}}</ns1:ProblemDetail>
+ 		      </ns1:Problem>';
 	/**
 	 * Create a new Ncip user response
 	 *
@@ -71,4 +95,21 @@ class RenewResponse extends Response {
 
 	}
 
+	/**
+	 * Return a XML representation of the request
+	 */
+	public function xml()
+	{
+		$s = $this->template;
+		$s = str_replace('{{language}}', 'eng', $s);
+		$s = str_replace('{{main}}', $this->success ? $this->template_success : $this->template_failure, $s);
+		if ($this->success) {
+			$s = str_replace('{{id}}', $this->id, $s);
+			$s = str_replace('{{dateDue}}', $this->formatDateTime($this->dateDue), $s);
+		} else {
+			$s = str_replace('{{error}}', $this->error, $s);
+			$s = str_replace('{{errorDetails}}', $this->errorDetails, $s);
+		}
+		return $s;
+	}
 }

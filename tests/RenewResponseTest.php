@@ -63,4 +63,28 @@ class RenewResponseTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals('Empty response', $response->error);
 	}
 
+	public function testXmlSuccess()
+	{
+		$response = new RenewResponse;
+		$response->id = '13k115558';
+		$response->dateDue = new \DateTime('2014-12-12T00:00:00+02:00');
+		$response->success = true;
+		$xml = $response->xml();
+
+		$this->assertContains('<ns1:ItemIdentifierValue>13k115558</ns1:ItemIdentifierValue>', $xml);
+		$this->assertContains('<ns1:DateDue>2014-12-12T00:00:00+0200</ns1:DateDue>', $xml);
+	}
+
+	public function testXmlFailure()
+	{
+		$response = new RenewResponse;
+		$response->id = '13k115558';
+		$response->success = false;
+		$response->error = 'Some error';
+		$xml = $response->xml();
+
+		$this->assertNotContains('<ns1:ItemIdentifierValue>13k115558</ns1:ItemIdentifierValue>', $xml);
+		$this->assertContains('<ns1:ProblemType>Some error</ns1:ProblemType>', $xml);
+	}
+
 }
