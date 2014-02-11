@@ -89,7 +89,8 @@ class RenewResponse extends Response {
 
 			if ($this->dom->first('ns1:Problem')) {
 				$this->success = false;
-				$this->error = $this->dom->text('ns1:Problem/ns1:ProblemDetail');
+				$this->error = $this->dom->text('ns1:Problem/ns1:ProblemType');
+				$this->errorDetails = $this->dom->text('ns1:Problem/ns1:ProblemDetail');
 			} else {
 				$this->success = true;
 				$this->dueDate = $this->parseDateTime($this->dom->text('ns1:DateDue'));

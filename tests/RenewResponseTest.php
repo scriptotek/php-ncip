@@ -23,7 +23,7 @@ class RenewResponseTest extends \PHPUnit_Framework_TestCase {
  		 <ns1:NCIPMessage xmlns:ns1="http://www.niso.org/2008/ncip">
  		   <ns1:RenewItemResponse>
  		      <ns1:Problem>
- 		         <ns1:ProblemType>Maximum renewals exceeded.</ns1:ProblemType>
+ 		         <ns1:ProblemType>Maximum renewals exceeded</ns1:ProblemType>
  		         <ns1:ProblemDetail>Maximum renewals exceeded.</ns1:ProblemDetail>
  		      </ns1:Problem>
  		      <ns1:Ext>
@@ -53,6 +53,8 @@ class RenewResponseTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertInstanceOf('Danmichaelo\Ncip\RenewResponse', $response);
 		$this->assertFalse($response->success);
+		$this->assertEquals('Maximum renewals exceeded', $response->error);
+		$this->assertEquals('Maximum renewals exceeded.', $response->errorDetails);
 	}
 
 	public function testParseNullResponse() {
