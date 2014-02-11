@@ -43,6 +43,8 @@
  *	  </ns1:NCIPMessage>
  */
 
+use Danmichaelo\QuiteSimpleXMLElement\QuiteSimpleXMLElement;
+
 class CheckOutResponse extends Response {
 
 	public $success;
@@ -55,7 +57,7 @@ class CheckOutResponse extends Response {
 	 * @param  QuiteSimpleXMLElement  $dom
 	 * @return void
 	 */
-	public function __construct($dom = null)
+	public function __construct(QuiteSimpleXMLElement $dom = null)
 	{
 
 		if (is_null($dom)) {

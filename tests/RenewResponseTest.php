@@ -73,6 +73,9 @@ class RenewResponseTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertContains('<ns1:ItemIdentifierValue>13k115558</ns1:ItemIdentifierValue>', $xml);
 		$this->assertContains('<ns1:DateDue>2014-12-12T00:00:00+0200</ns1:DateDue>', $xml);
+
+		$response = new RenewResponse(new QuiteSimpleXMLElement($xml));
+		$this->assertTrue($response->success);
 	}
 
 	public function testXmlFailure()
@@ -85,6 +88,9 @@ class RenewResponseTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertNotContains('<ns1:ItemIdentifierValue>13k115558</ns1:ItemIdentifierValue>', $xml);
 		$this->assertContains('<ns1:ProblemType>Some error</ns1:ProblemType>', $xml);
+
+		$response = new RenewResponse(new QuiteSimpleXMLElement($xml));
+		$this->assertFalse($response->success);
 	}
 
 }

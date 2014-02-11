@@ -37,6 +37,9 @@
  *	     </ns1:RenewItemResponse>
  *	  </ns1:NCIPMessage>
  */
+
+use Danmichaelo\QuiteSimpleXMLElement\QuiteSimpleXMLElement;
+
 class RenewResponse extends Response {
 
 	public $success;
@@ -73,7 +76,7 @@ class RenewResponse extends Response {
 	 * @param  QuiteSimpleXMLElement  $dom
 	 * @return void
 	 */
-	public function __construct($dom = null)
+	public function __construct(QuiteSimpleXMLElement $dom = null)
 	{
 
 		if (is_null($dom)) {

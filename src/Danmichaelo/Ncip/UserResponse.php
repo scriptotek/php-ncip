@@ -6,6 +6,8 @@
  * a small subset of the NCIP services.
  */
 
+use Danmichaelo\QuiteSimpleXMLElement\QuiteSimpleXMLElement;
+
 class UserResponse extends Response {
 
 	public $exists = false;
@@ -103,7 +105,7 @@ class UserResponse extends Response {
 	 * @param  QuiteSimpleXMLElement  $dom
 	 * @return void
 	 */
-	public function __construct($dom = null)
+	public function __construct(QuiteSimpleXMLElement $dom = null)
 	{
 		$this->loanedItems = array();
 		if (is_null($dom)) return;

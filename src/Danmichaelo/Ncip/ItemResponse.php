@@ -56,6 +56,8 @@
  *		</ns1:NCIPMessage>
  */
 
+use Danmichaelo\QuiteSimpleXMLElement\QuiteSimpleXMLElement;
+
 class ItemResponse extends Response {
 
 	public $exists = false;
@@ -74,7 +76,7 @@ class ItemResponse extends Response {
 	 * @param  QuiteSimpleXMLElement  $dom
 	 * @return void
 	 */
-	public function __construct($dom = null)
+	public function __construct(QuiteSimpleXMLElement $dom = null)
 	{
 		if (is_null($dom)) return;
 
