@@ -18,7 +18,7 @@ class CheckInRequest extends Request {
 	 * @param  string  $itemId
 	 * @return void
 	 */
-	public function __construct($agencyId, $itemId = null)
+	public function __construct($agencyId, $itemId)
 	{
 		$this->agencyId = $agencyId;
 		$this->itemId = $itemId;

@@ -16,7 +16,7 @@ class ItemRequest extends Request {
 	 * @param  string  $itemId
 	 * @return void
 	 */
-	public function __construct($itemId = null)
+	public function __construct($itemId)
 	{
 		$this->itemId = $itemId;
 	}

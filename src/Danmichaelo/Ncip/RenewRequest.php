@@ -38,7 +38,7 @@ class RenewRequest extends Request {
 						<ns1:AuthenticationInputType>User Id</ns1:AuthenticationInputType>
 					</ns1:AuthenticationInput>
 					<ns1:ItemId>
-					   <ns1:ItemIdentifierValue>' . $this->userId . '</ns1:ItemIdentifierValue>
+					   <ns1:ItemIdentifierValue>' . $this->itemId . '</ns1:ItemIdentifierValue>
 					</ns1:ItemId>
 				</ns1:RenewItem>
 			</ns1:NCIPMessage>';

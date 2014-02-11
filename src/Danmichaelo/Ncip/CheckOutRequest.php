@@ -20,7 +20,7 @@ class CheckOutRequest extends Request {
 	 * @param  string  $itemId
 	 * @return void
 	 */
-	public function __construct($agencyId, $userId = null, $itemId = null)
+	public function __construct($agencyId, $userId, $itemId)
 	{
 		$this->agencyId = $agencyId;
 		$this->userId = $userId;

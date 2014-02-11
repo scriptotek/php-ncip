@@ -16,7 +16,7 @@ class UserRequest extends Request {
 	 * @param  string  $userId
 	 * @return void
 	 */
-	public function __construct($userId = null)
+	public function __construct($userId)
 	{
 		$this->userId = $userId;
 	}
