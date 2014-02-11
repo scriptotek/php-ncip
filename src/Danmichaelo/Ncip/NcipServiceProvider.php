@@ -12,16 +12,35 @@ class NcipServiceProvider extends ServiceProvider {
 	protected $defer = false;
 
 	/**
+	 * Bootstrap the application events.
+	 *
+	 * @return void
+	 */
+	public function boot() {
+		$this->package('danmichaelo/ncip');
+	}
+
+	/**
 	 * Register the service provider.
 	 *
 	 * @return void
 	 */
 	public function register()
 	{
-		$this->app['ncip'] = $this->app->share(function($app)
+		$this->app['ncip.client'] = $this->app->share(function($app)
 		{
-			$conn = new NcipConnector($app['config']['ncip.url'], $app['config']['ncip.user_agent']);
-			return new NcipClient($conn, $app['config']['ncip.agency_id']);
+			//\Log::info( 'URL: ' . $app['config']['ncip::url'] );
+			$conn = new NcipConnector(
+				$app['config']['ncip::url'], 
+				$app['config']['ncip::user_agent'],
+				$app['config']['ncip::agency_id']
+			);
+			return new NcipClient($conn);
+		});
+
+		$this->app['ncip.server'] = $this->app->share(function($app)
+		{
+			return new NcipServer($app['config']['ncip.agency_id']);
 		});
 	}
 
@@ -32,7 +51,7 @@ class NcipServiceProvider extends ServiceProvider {
 	 */
 	public function provides()
 	{
-		return array('ncip');
+		return array('ncip.client', 'ncip.server');
 	}
 
 }
