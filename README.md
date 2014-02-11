@@ -4,8 +4,7 @@
 [![Coverage Status](https://coveralls.io/repos/danmichaelo/php-ncip/badge.png?branch=master)](https://coveralls.io/r/danmichaelo/php-ncip?branch=master)
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/danmichaelo/php-ncip/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
-This package currently only implements a small subset of the NCIP specification.
-Focus has been on providing a simple API rather than completeness.
+**php-ncip** is a php package for parsing and formatting NCIP request and response messages. Development has been guided by a desire for a simple API rather than a complete one. Only a small subset of the NCIP specification is therefore currently covered, but suggestions for additions are welcome.
 
 ## Installation:
 
