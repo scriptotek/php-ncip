@@ -44,8 +44,8 @@ $ncipUrl = 'http://eksempel.com/NCIPResponder';
 $userAgent = 'My NCIP client/0.1';
 $agencyId = 'a';
 
-$conn = new NcipConnector($url, $userAgent);
-$client = new NcipClient($conn, $agencyId);
+$conn = new NcipConnector($ncipUrl, $userAgent, $agencyId);
+$client = new NcipClient($conn);
 ```
 
 To construct a server:

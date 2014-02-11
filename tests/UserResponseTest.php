@@ -147,8 +147,12 @@ class UserResponseTest extends \PHPUnit_Framework_TestCase {
 		$this->assertContains('<ns1:GivenName>Meriadoc</ns1:GivenName>', $xml);
 		$this->assertContains('<ns1:Surname>Brandybuck</ns1:Surname>', $xml);
 		$this->assertContains('<ns1:ElectronicAddressData>meriadoc.brandybuck@hobb.it</ns1:ElectronicAddressData>', $xml);
+
+		$this->assertSelectCount('LoanedItem', 1, $xml);
+		$this->assertContains('<ns1:ItemIdentifierValue>13k115558</ns1:ItemIdentifierValue>', $xml);
 		$this->assertContains('<ns1:ReminderLevel>2</ns1:ReminderLevel>', $xml);
 		$this->assertContains('<ns1:DateDue>2014-12-12T00:00:00+0200</ns1:DateDue>', $xml);
+		$this->assertContains('<ns1:Title>Neutrino cosmology</ns1:Title>', $xml);
 	}
 
 }
