@@ -1,7 +1,6 @@
 # Basic NCIP php library and Laravel package
 
 [![Build Status](https://travis-ci.org/danmichaelo/php-ncip.png?branch=master)](https://travis-ci.org/danmichaelo/php-ncip)
-[![Coverage Status](https://coveralls.io/repos/danmichaelo/php-ncip/badge.png?branch=master)](https://coveralls.io/r/danmichaelo/php-ncip?branch=master)
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/danmichaelo/php-ncip/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 **php-ncip** is a php package for parsing and formatting NCIP request and response messages. Development has been guided by a desire for a simple API rather than a complete one. Only a small subset of the NCIP specification is therefore currently covered, but suggestions for additions are welcome.
