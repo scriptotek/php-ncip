@@ -1,11 +1,13 @@
 <?php namespace Danmichaelo\Ncip;
 
+use Carbon\Carbon;
+
 class Response {
 
 	protected $dom;
 
 	public function parseDateTime($datestring) {
-		return new \DateTime($datestring);
+		return new Carbon($datestring);
 	}
 
 	public function formatDateTime($datetime) {
