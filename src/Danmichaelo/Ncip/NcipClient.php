@@ -65,7 +65,7 @@ class NcipClient extends NcipService {
 	 */
 	public function checkOutItem($user_id, $item_id)
 	{
-		$request = new CheckOutRequest($this->agency_id, $user_id, $item_id);
+		$request = new CheckOutRequest($this->connector->agency_id, $user_id, $item_id);
 		$response = $this->post($request);
 		return new CheckOutResponse($response);
 	}
@@ -78,7 +78,7 @@ class NcipClient extends NcipService {
 	 */
 	public function checkInItem($item_id)
 	{
-		$request = new CheckInRequest($this->agency_id, $item_id);
+		$request = new CheckInRequest($this->connector->agency_id, $item_id);
 		$response = $this->post($request);
 		return new CheckInResponse($response);
 	}
