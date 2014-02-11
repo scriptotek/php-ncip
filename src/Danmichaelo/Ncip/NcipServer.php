@@ -21,7 +21,11 @@ class NcipServer extends NcipService {
 	public function parseRequest($xml)
 	{
 		$x = $this->parseXml($xml);
-		$kids = $x->first('/ns1:NCIPMessage')->children('ns1');
+		$x = $x->first('/ns1:NCIPMessage');
+		if (!$x) {
+			throw new InvalidNcipRequestException('No NCIP message received');			
+		}
+		$kids = $x->children('ns1');
 		if (count($kids) !== 1) {
 			throw new InvalidNcipRequestException('No NCIP message received');
 		}
@@ -56,7 +60,7 @@ class NcipServer extends NcipService {
 				break;
 
 			case 'LookupItem':
-				$itemId = $x->text('ns1:ItemId/ns1:ItemIdentifierValue');
+				$itemId = $msg->text('ns1:ItemId/ns1:ItemIdentifierValue');
 				$request = new ItemRequest($itemId);
 				break;
 

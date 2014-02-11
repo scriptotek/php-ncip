@@ -10,10 +10,10 @@ class Request {
 		if ($kind == 'LookupItem' && $this instanceof \Danmichaelo\Ncip\ItemRequest) {
 			return true;
 		}
-		if ($kind == 'CheckOutItem' && $this instanceof \Danmichaelo\Ncip\CheckOutItem) {
+		if ($kind == 'CheckOutItem' && $this instanceof \Danmichaelo\Ncip\CheckOutRequest) {
 			return true;
 		}
-		if ($kind == 'CheckInItem' && $this instanceof \Danmichaelo\Ncip\CheckInItem) {
+		if ($kind == 'CheckInItem' && $this instanceof \Danmichaelo\Ncip\CheckInRequest) {
 			return true;
 		}
 		if ($kind == 'RenewItem' && $this instanceof \Danmichaelo\Ncip\RenewRequest) {

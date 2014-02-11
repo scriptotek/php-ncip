@@ -18,7 +18,7 @@ class RenewRequest extends Request {
 	 * @param  string  $itemId
 	 * @return void
 	 */
-	public function __construct($userId = null, $itemId = null)
+	public function __construct($userId, $itemId)
 	{
 		$this->userId = $userId;
 		$this->itemId = $itemId;

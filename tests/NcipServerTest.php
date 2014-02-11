@@ -26,7 +26,25 @@ class NcipServerTest extends \PHPUnit_Framework_TestCase {
 			</ns1:NCIPMessage>');
 
 		$this->assertInstanceOf('Danmichaelo\Ncip\UserRequest', $request);
+		$this->assertTrue($request->is('LookupUser'));
 		$this->assertEquals($userId, $request->userId);
+	}
+
+	public function testLookupItem() {
+		$itemId = 'doc1234567';
+		$request = $this->server->parseRequest('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+			<ns1:NCIPMessage xmlns:ns1="http://www.niso.org/2008/ncip" ns1:version="http://www.niso.org/schemas/ncip/v2_01/ncip_v2_01.xsd">
+				<ns1:LookupItem>
+					<ns1:ItemId>
+					   <ns1:ItemIdentifierType>Accession Number</ns1:ItemIdentifierType>
+					   <ns1:ItemIdentifierValue>' . $itemId . '</ns1:ItemIdentifierValue>
+					</ns1:ItemId>
+				</ns1:LookupItem>
+			</ns1:NCIPMessage>');
+
+		$this->assertInstanceOf('Danmichaelo\Ncip\ItemRequest', $request);
+		$this->assertTrue($request->is('LookupItem'));
+		$this->assertEquals($itemId, $request->itemId);
 	}
 
 	public function testRenewItem() {
@@ -47,6 +65,7 @@ class NcipServerTest extends \PHPUnit_Framework_TestCase {
 			</ns1:NCIPMessage>');
 
 		$this->assertInstanceOf('Danmichaelo\Ncip\RenewRequest', $request);
+		$this->assertTrue($request->is('RenewItem'));
 		$this->assertEquals($userId, $request->userId);
 		$this->assertEquals($itemId, $request->itemId);
 	}
@@ -69,6 +88,7 @@ class NcipServerTest extends \PHPUnit_Framework_TestCase {
 			</ns1:NCIPMessage>');
 
 		$this->assertInstanceOf('Danmichaelo\Ncip\CheckOutRequest', $request);
+		$this->assertTrue($request->is('CheckOutItem'));
 		$this->assertEquals($agencyId, $request->agencyId);
 		$this->assertEquals($userId, $request->userId);
 		$this->assertEquals($itemId, $request->itemId);
@@ -88,8 +108,43 @@ class NcipServerTest extends \PHPUnit_Framework_TestCase {
 			</ns1:NCIPMessage>');
 
 		$this->assertInstanceOf('Danmichaelo\Ncip\CheckInRequest', $request);
+		$this->assertTrue($request->is('CheckInItem'));
 		$this->assertEquals($agencyId, $request->agencyId);
 		$this->assertEquals($itemId, $request->itemId);
+	}
+
+	/**
+     * @expectedException Danmichaelo\Ncip\InvalidNcipRequestException
+     */
+	public function testInvalidRequestName() {
+		$itemId = 'doc0000001';
+		$request = $this->server->parseRequest('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+			<ns1:NCIPMessage xmlns:ns1="http://www.niso.org/2008/ncip" ns1:version="http://www.niso.org/schemas/ncip/v2_01/ncip_v2_01.xsd">
+				<ns1:DestroyItem>
+					<ns1:ItemId>
+					   <ns1:ItemIdentifierValue>' . $itemId . '</ns1:ItemIdentifierValue>
+					</ns1:ItemId>
+				</ns1:DestroyItem>
+			</ns1:NCIPMessage>');
+	}
+
+	/**
+     * @expectedException Danmichaelo\Ncip\InvalidNcipRequestException
+     */
+	public function testInvalidMessageContainer() {
+		$request = $this->server->parseRequest('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+			<html></html>
+		');
+	}
+
+	/**
+     * @expectedException Danmichaelo\Ncip\InvalidNcipRequestException
+     */
+	public function testNoRequest() {
+		$request = $this->server->parseRequest('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+			<ns1:NCIPMessage xmlns:ns1="http://www.niso.org/2008/ncip" ns1:version="http://www.niso.org/schemas/ncip/v2_01/ncip_v2_01.xsd">
+			</ns1:NCIPMessage>
+		');
 	}
 
 }
