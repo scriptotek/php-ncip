@@ -8,7 +8,7 @@
 [![License](https://poser.pugx.org/danmichaelo/ncip/license.png)](https://packagist.org/packages/danmichaelo/ncip)
 
 
-**php-ncip** is a php package for parsing and formatting NCIP request and response messages. Development has been guided by a desire for a simple API rather than a complete one. Only a small subset of the NCIP specification is therefore currently covered, but suggestions for additions are welcome.
+**php-ncip** is a php package for parsing and formatting NCIP request and response messages. Development has been guided by a desire for a simple API rather than a complete one. Only a small subset of the NCIP specification is currently covered, but suggestions for additions are welcome.
 
 ## Installation:
 
@@ -63,12 +63,12 @@ $server = new NcipServer;
 If you have registered the Laravel 4 service provider, the classes can be constructed through the applications container instead:
 
 ```php
-$client = App::make('ncip-client');
-$server = App::make('ncip-server');
+$client = App::make('ncip.client');
+$server = App::make('ncip.server');
 
 // Or if you have access to an instance of the application.
-$client = $app['ncip-client'];
-$server = $app['ncip-server'];
+$client = $app['ncip.client'];
+$server = $app['ncip.server'];
 ```
 
 The settings are now pulled from `app/config/packages/danmichael/ncip/config.php` instead, and the `NcipConnector` is injected into the `NcipClient` automatically.
