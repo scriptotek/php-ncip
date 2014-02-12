@@ -72,14 +72,46 @@ class CheckOutResponseTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertInstanceOf('Danmichaelo\Ncip\CheckOutResponse', $response);
 		$this->assertFalse($response->success);
+		$this->assertEquals('Item does not circulate', $response->error);
+		$this->assertEquals('LTID:Finnes ikke', $response->errorDetails);
 	}
 
 	public function testParseNullResponse() {
 		$response = new CheckOutResponse(null);
 
 		$this->assertInstanceOf('Danmichaelo\Ncip\CheckOutResponse', $response);
+	}
+
+	public function testXmlSuccess()
+	{
+		$response = new CheckOutResponse;
+		$response->userId = 'ex0000001';
+		$response->itemId = '13k115558';
+		$response->userAgencyId = 'x';
+		$response->itemAgencyId = 'y';
+		$response->dateDue = new \DateTime('2014-12-12T00:00:00+02:00');
+		$response->success = true;
+		$xml = $response->xml();
+
+		$this->assertContains('<ns1:ItemIdentifierValue>13k115558</ns1:ItemIdentifierValue>', $xml);
+		$this->assertContains('<ns1:DateDue>2014-12-12T00:00:00+0200</ns1:DateDue>', $xml);
+
+		$response = new CheckOutResponse(new QuiteSimpleXMLElement($xml));
+		$this->assertTrue($response->success);
+	}
+
+	public function testXmlFailure()
+	{
+		$response = new CheckOutResponse;
+		$response->success = false;
+		$response->error = 'Some error';
+		$xml = $response->xml();
+
+		$this->assertNotContains('<ns1:ItemIdentifierValue>13k115558</ns1:ItemIdentifierValue>', $xml);
+		$this->assertContains('<ns1:ProblemType>Some error</ns1:ProblemType>', $xml);
+
+		$response = new CheckOutResponse(new QuiteSimpleXMLElement($xml));
 		$this->assertFalse($response->success);
-		$this->assertEquals('Empty response', $response->error);
 	}
 
 }
