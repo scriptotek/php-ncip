@@ -93,6 +93,7 @@ class RenewResponse extends Response {
 				$this->errorDetails = $this->dom->text('ns1:Problem/ns1:ProblemDetail');
 			} else {
 				$this->success = true;
+				$this->id = $this->dom->text('ns1:ItemId/ns1:ItemIdentifierValue');
 				$this->dueDate = $this->parseDateTime($this->dom->text('ns1:DateDue'));
 			}
 		}

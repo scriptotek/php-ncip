@@ -67,6 +67,8 @@ class ItemResponse extends Response {
 	public $circulationStatus;
 	public $onLoan;
 	public $bibliographic;
+	public $error;
+	public $errorDetails;
 
 	protected $dom;
 
@@ -85,7 +87,8 @@ class ItemResponse extends Response {
 		if ($this->dom->first('ns1:Problem')) {
 
 			$this->exists = false;
-			$this->error = $response->text('ns1:Problem/ns1:ProblemDetail');
+			$this->error = $this->dom->text('ns1:Problem/ns1:ProblemType');
+			$this->errorDetails = $this->dom->text('ns1:Problem/ns1:ProblemDetail');
 
 		} else {
 

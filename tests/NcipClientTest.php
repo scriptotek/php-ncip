@@ -18,7 +18,7 @@ class NcipClientTest extends \PHPUnit_Framework_TestCase {
 			->once()
 			->andReturn($xml_response);
 		$this->agencyId = 'x';
-		$this->ncip = new NcipClient($mock, $this->agencyId);
+		$this->ncip = new NcipClient($mock);
 	}
 
 	public function testLookupUser() {
@@ -116,4 +116,5 @@ class NcipClientTest extends \PHPUnit_Framework_TestCase {
 
 		$response = $this->ncip->lookupUser('test123456');
 	}
+
 }

@@ -38,13 +38,15 @@ class RenewResponseTest extends \PHPUnit_Framework_TestCase {
 		<ns1:NCIPMessage ';
 
 	public function testParseDummySuccessResponse() {
+		$id = '13k112494';
 		$dummy_response = new QuiteSimpleXMLElement($this->dummy_response_success);
 		$response = new RenewResponse($dummy_response);
 		$date1 = new \DateTime('2013-11-11T00:30:35+01:00');
 
 		$this->assertInstanceOf('Danmichaelo\Ncip\RenewResponse', $response);
 		$this->assertTrue($response->success);
-		$this->assertEquals($response->dueDate->getTimestamp(), $date1->getTimestamp());
+		$this->assertEquals($id, $response->id);
+		$this->assertEquals($date1->getTimestamp(), $response->dueDate->getTimestamp());
 	}
 
 	public function testParseDummyFailResponse() {
@@ -61,8 +63,6 @@ class RenewResponseTest extends \PHPUnit_Framework_TestCase {
 		$response = new RenewResponse(null);
 
 		$this->assertInstanceOf('Danmichaelo\Ncip\RenewResponse', $response);
-		$this->assertFalse($response->success);
-		$this->assertEquals('Empty response', $response->error);
 	}
 
 	public function testXmlSuccess()
