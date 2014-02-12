@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/danmichaelo/php-ncip.png?branch=master)](https://travis-ci.org/danmichaelo/php-ncip)
 [![Coverage Status](https://coveralls.io/repos/danmichaelo/php-ncip/badge.png?branch=master)](https://coveralls.io/r/danmichaelo/php-ncip?branch=master)
+[![Dependencies Status](https://depending.in/danmichaelo/php-ncip.png)](http://depending.in/danmichaelo/php-ncip)
 [![Latest Stable Version](https://poser.pugx.org/danmichaelo/ncip/v/stable.png)](https://packagist.org/packages/danmichaelo/ncip)
 [![Total Downloads](https://poser.pugx.org/danmichaelo/ncip/downloads.png)](https://packagist.org/packages/danmichaelo/ncip)
 [![License](https://poser.pugx.org/danmichaelo/ncip/license.png)](https://packagist.org/packages/danmichaelo/ncip)
