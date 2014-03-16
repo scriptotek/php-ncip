@@ -53,7 +53,7 @@ class CheckOutResponse extends Response {
 	public $itemAgencyId;
 	public $userAgencyId;
 	public $success;
-	public $dueDate;
+	public $dateDue;
 	public $error;
 	public $errorDetails;
 
@@ -127,7 +127,7 @@ class CheckOutResponse extends Response {
 			$this->itemId = $this->dom->text('ns1:ItemId/ns1:ItemIdentifierValue');
 			$this->userAgencyId = $this->dom->text('ns1:UserId/ns1:AgencyId');
 			$this->itemAgencyId = $this->dom->text('ns1:ItemId/ns1:AgencyId');
-			$this->dueDate = $this->parseDateTime($this->dom->text('ns1:DateDue'));
+			$this->dateDue = $this->parseDateTime($this->dom->text('ns1:DateDue'));
 			$x = $this->dom->first('ns1:ItemOptionalFields/ns1:BibliographicDescription');
 			if ($x) {
 				$this->bibliographic = $this->parseBibliographicDescription($x);

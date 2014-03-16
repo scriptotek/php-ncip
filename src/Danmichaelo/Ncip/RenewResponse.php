@@ -44,9 +44,13 @@ class RenewResponse extends Response {
 
 	public $success;
 	public $id;
-	public $dueDate;
+	public $dateDue;
 	public $error;
 	public $errorDetails;
+
+	protected $args = array('success');
+	protected $successArgs = array('id', 'dateDue');
+	protected $failureArgs = array('error');
 
 	protected $template = '
  		  <ns1:NCIPMessage xmlns:ns1="http://www.niso.org/2008/ncip">
@@ -94,7 +98,7 @@ class RenewResponse extends Response {
 			} else {
 				$this->success = true;
 				$this->id = $this->dom->text('ns1:ItemId/ns1:ItemIdentifierValue');
-				$this->dueDate = $this->parseDateTime($this->dom->text('ns1:DateDue'));
+				$this->dateDue = $this->parseDateTime($this->dom->text('ns1:DateDue'));
 			}
 		}
 
@@ -105,6 +109,8 @@ class RenewResponse extends Response {
 	 */
 	public function xml()
 	{
+		$this->validate();
+
 		$s = $this->template;
 		$s = str_replace('{{language}}', 'eng', $s);
 		$s = str_replace('{{main}}', $this->success ? $this->template_success : $this->template_failure, $s);

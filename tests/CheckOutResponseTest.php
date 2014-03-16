@@ -60,7 +60,7 @@ class CheckOutResponseTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertInstanceOf('Danmichaelo\Ncip\CheckOutResponse', $response);
 		$this->assertTrue($response->success);
-		$this->assertEquals($date1->getTimestamp(), $response->dueDate->getTimestamp());
+		$this->assertEquals($date1->getTimestamp(), $response->dateDue->getTimestamp());
 		$this->assertEquals('Learning SPARQL : querying and updating with SPARQL 1.1', $response->bibliographic['title']);
 		$this->assertEquals('13k040189', $response->itemId);
 

@@ -46,7 +46,7 @@ class RenewResponseTest extends \PHPUnit_Framework_TestCase {
 		$this->assertInstanceOf('Danmichaelo\Ncip\RenewResponse', $response);
 		$this->assertTrue($response->success);
 		$this->assertEquals($id, $response->id);
-		$this->assertEquals($date1->getTimestamp(), $response->dueDate->getTimestamp());
+		$this->assertEquals($date1->getTimestamp(), $response->dateDue->getTimestamp());
 	}
 
 	public function testParseDummyFailResponse() {
