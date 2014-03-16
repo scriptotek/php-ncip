@@ -9,7 +9,7 @@ interface NcipClientInterface {
 	 * @param  array   $options
 	 * @return void
 	 */
-	public function __construct(NcipConnector $connector, $options = array())
+	public function __construct(NcipConnector $connector, $options = array());
 
 	/**
 	 * Lookup user information from user id
