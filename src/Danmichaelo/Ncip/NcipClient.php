@@ -7,6 +7,7 @@
  */
 
 use Danmichaelo\QuiteSimpleXMLElement\InvalidXMLException;
+use Evenement\EventEmitter;
 
 class NcipClient extends NcipService {
 
@@ -19,9 +20,10 @@ class NcipClient extends NcipService {
 	 * @param  array   $options
 	 * @return void
 	 */
-	public function __construct(NcipConnector $connector)
+	public function __construct(NcipConnector $connector, EventEmitter $emitter = null)
 	{
 		$this->connector = $connector;
+		$this->emitter = $emitter ?: new EventEmitter;
 		parent::__construct();
 	}
 
@@ -52,6 +54,7 @@ class NcipClient extends NcipService {
 	public function lookupUser($user_id)
 	{
 		$request = new UserRequest($user_id);
+		$this->emitter->emit('request.user', array($user_id));
 		$response = $this->post($request);
 		return new UserResponse($response);
 	}
@@ -66,6 +69,7 @@ class NcipClient extends NcipService {
 	public function checkOutItem($user_id, $item_id)
 	{
 		$request = new CheckOutRequest($this->connector->agency_id, $user_id, $item_id);
+		$this->emitter->emit('request.checkout', array($user_id, $item_id));
 		$response = $this->post($request);
 		return new CheckOutResponse($response);
 	}
@@ -79,6 +83,7 @@ class NcipClient extends NcipService {
 	public function checkInItem($item_id)
 	{
 		$request = new CheckInRequest($this->connector->agency_id, $item_id);
+		$this->emitter->emit('request.checkin', array($item_id));
 		$response = $this->post($request);
 		return new CheckInResponse($response);
 	}
@@ -93,6 +98,7 @@ class NcipClient extends NcipService {
 	public function renewItem($user_id, $item_id)
 	{
 		$request = new RenewRequest($user_id, $item_id);
+		$this->emitter->emit('request.renew', array($user_id, $item_id));
 		$response = $this->post($request);
 		return new RenewResponse($response);
 	}
@@ -106,6 +112,7 @@ class NcipClient extends NcipService {
 	public function lookupItem($item_id)
 	{
 		$request = new ItemRequest($item_id);
+		$this->emitter->emit('request.item', array($item_id));
 		$response = $this->post($request);
 		return new ItemResponse($response);
 	}
