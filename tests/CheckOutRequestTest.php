@@ -12,6 +12,7 @@ class CheckOutRequestTest extends \PHPUnit_Framework_TestCase {
 		$req = new CheckOutRequest($agencyId, $userId, $itemId);
 		$xml = $req->xml();
 
+		$this->assertTrue($req->is('CheckOutItem'));
 		$this->assertSelectCount('CheckOutItem', 1, $xml);
 		$this->assertContains('<ns1:AgencyId>' . $agencyId . '</ns1:AgencyId>', $xml);
 		$this->assertContains('<ns1:UserIdentifierValue>' . $userId . '</ns1:UserIdentifierValue>', $xml);

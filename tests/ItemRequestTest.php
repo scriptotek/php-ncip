@@ -10,6 +10,7 @@ class ItemRequestTest extends \PHPUnit_Framework_TestCase {
 		$req = new ItemRequest($itemId);
 		$xml = $req->xml();
 
+		$this->assertTrue($req->is('LookupItem'));
 		$this->assertSelectCount('LookupItem', 1, $xml);
 		$this->assertContains('<ns1:ItemIdentifierValue>' . $itemId . '</ns1:ItemIdentifierValue>', $xml);
 	}
