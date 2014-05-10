@@ -5,8 +5,8 @@ interface NcipClientInterface {
 	/**
 	 * Create a new Ncip client
 	 *
-	 * @param  string  $url
-	 * @param  array   $options
+	 * @param  NcipConnector  $connector
+	 * @param  array          $options
 	 * @return void
 	 */
 	public function __construct(NcipConnector $connector, $options = array());

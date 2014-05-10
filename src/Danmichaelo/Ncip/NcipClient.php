@@ -18,8 +18,8 @@ class NcipClient extends NcipService {
 	/**
 	 * Create a new Ncip client
 	 *
-	 * @param  string  $url
-	 * @param  array   $options
+	 * @param  NcipConnector  $connector
+	 * @param  EventEmitter   $emitter
 	 * @return void
 	 */
 	public function __construct(NcipConnector $connector, EventEmitter $emitter = null)
