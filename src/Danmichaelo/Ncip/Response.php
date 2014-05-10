@@ -5,11 +5,33 @@ use Carbon\Carbon;
 
 class Response {
 
+    /** @var QuiteSimpleXMLElement */
 	protected $dom;
+
+    /** @var bool */
 	public $success;
+
+    /** @var string */
 	public $error;
+
+    /** @var string */
 	public $errorDetails;
 
+    /** @var array */
+	protected $args;
+
+    /** @var array */
+	protected $successArgs;
+
+    /** @var array */
+	protected $failureArgs;
+
+	/**
+	 * Create a new Response
+	 *
+	 * @param  QuiteSimpleXMLElement  $dom
+	 * @return void
+	 */
 	public function __construct(QuiteSimpleXMLElement $dom = null)
 	{
 		$this->dom = $dom;
@@ -52,6 +74,11 @@ class Response {
 		return $a;
 	}
 
+	/**
+	 * Validate the response
+	 *
+	 * @return void
+	 */
 	protected function validate()
 	{
 		if (isset($this->args)) {			
