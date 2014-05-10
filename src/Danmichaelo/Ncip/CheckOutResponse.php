@@ -114,15 +114,9 @@ class CheckOutResponse extends Response {
 	public function __construct(QuiteSimpleXMLElement $dom = null)
 	{
 		if (is_null($dom)) return;
+		parent::__construct($dom->first('/ns1:NCIPMessage/ns1:CheckOutItemResponse'));
 
-		$this->dom = $dom->first('/ns1:NCIPMessage/ns1:CheckOutItemResponse');
-
-		if ($this->dom->first('ns1:Problem')) {
-			$this->success = false;
-			$this->error = $this->dom->text('ns1:Problem/ns1:ProblemType');
-			$this->errorDetails = $this->dom->text('ns1:Problem/ns1:ProblemDetail');
-		} else {
-			$this->success = true;
+		if ($this->success) {
 			$this->userId = $this->dom->text('ns1:UserId/ns1:UserIdentifierValue');
 			$this->itemId = $this->dom->text('ns1:ItemId/ns1:ItemIdentifierValue');
 			$this->userAgencyId = $this->dom->text('ns1:UserId/ns1:AgencyId');

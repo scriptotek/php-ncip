@@ -81,18 +81,11 @@ class ItemResponse extends Response {
 	public function __construct(QuiteSimpleXMLElement $dom = null)
 	{
 		if (is_null($dom)) return;
+		parent::__construct($dom->first('/ns1:NCIPMessage/ns1:LookupItemResponse'));
 
-		$this->dom = $dom->first('/ns1:NCIPMessage/ns1:LookupItemResponse');
+		if ($this->success) {
 
-		if ($this->dom->first('ns1:Problem')) {
-
-			$this->exists = false;
-			$this->error = $this->dom->text('ns1:Problem/ns1:ProblemType');
-			$this->errorDetails = $this->dom->text('ns1:Problem/ns1:ProblemDetail');
-
-		} else {
-
-			$this->exists = true;
+			$this->exists = true; // not really needed when we have 'success'
 			$this->itemId = $this->dom->text('ns1:ItemId/ns1:ItemIdentifierValue');
 			$this->agencyId = $this->dom->text('ns1:ItemId/ns1:AgencyId');
 			$this->dateRecalled = $this->dom->text('ns1:DateRecalled')

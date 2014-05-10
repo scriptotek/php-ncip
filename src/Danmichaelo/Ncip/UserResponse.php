@@ -109,13 +109,10 @@ class UserResponse extends Response {
 	{
 		$this->loanedItems = array();
 		if (is_null($dom)) return;
+		parent::__construct($dom->first('/ns1:NCIPMessage/ns1:LookupUserResponse'));
 
-		$this->dom = $dom->first('/ns1:NCIPMessage/ns1:LookupUserResponse');
-
-		if ($this->dom->first('ns1:Problem')) {
-			$this->exists = false;
-		} else {
-			$this->exists = true;
+		if ($this->success) {
+			$this->exists = true; // not really neccessary as we have 'success'
 			$uinfo = $this->dom->first('ns1:UserOptionalFields');
 			$this->userId = $this->dom->text('ns1:UserId/ns1:UserIdentifierValue');
 			$this->agencyId = $this->dom->text('ns1:UserId/ns1:AgencyId');

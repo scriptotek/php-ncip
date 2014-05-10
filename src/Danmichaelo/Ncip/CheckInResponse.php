@@ -42,7 +42,6 @@ use Danmichaelo\QuiteSimpleXMLElement\QuiteSimpleXMLElement;
 
 class CheckInResponse extends Response {
 
-	public $success;
 	public $id;
 	public $agencyId;
 	public $error;
@@ -57,16 +56,9 @@ class CheckInResponse extends Response {
 	public function __construct(QuiteSimpleXMLElement $dom = null)
 	{
 		if (is_null($dom)) return;
+		parent::__construct($dom->first('/ns1:NCIPMessage/ns1:CheckInItemResponse'));
 
-		$this->dom = $dom->first('/ns1:NCIPMessage/ns1:CheckInItemResponse');
-
-		if ($this->dom->first('ns1:Problem')) {
-			$this->success = false;
-			$this->error = $this->dom->text('ns1:Problem/ns1:ProblemType');
-			$this->errorDetails = $this->dom->text('ns1:Problem/ns1:ProblemDetail');
-
-		} else {
-			$this->success = true;
+		if ($this->success) {
 			$this->id = $this->dom->text('ns1:ItemId/ns1:ItemIdentifierValue');
 			$this->agencyId = $this->dom->text('ns1:ItemId/ns1:AgencyId');
 		}

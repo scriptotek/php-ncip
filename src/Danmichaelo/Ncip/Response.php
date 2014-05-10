@@ -1,10 +1,32 @@
 <?php namespace Danmichaelo\Ncip;
 
+use Danmichaelo\QuiteSimpleXMLElement\QuiteSimpleXMLElement;
 use Carbon\Carbon;
 
 class Response {
 
 	protected $dom;
+	public $success;
+	public $error;
+	public $errorDetails;
+
+	public function __construct(QuiteSimpleXMLElement $dom = null)
+	{
+		$this->dom = $dom;
+		$this->success = false;
+
+		if (is_null($this->dom)) {
+			return;
+		}
+
+		if ($this->dom->first('ns1:Problem')) {
+			$this->error = $this->dom->text('ns1:Problem/ns1:ProblemType');
+			$this->errorDetails = $this->dom->text('ns1:Problem/ns1:ProblemDetail');
+		} else {
+			$this->success = true;			
+		}
+		
+	}
 
 	public function parseDateTime($datestring) {
 		return new Carbon($datestring);
