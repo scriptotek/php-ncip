@@ -31,7 +31,7 @@ class NcipConnector {
 	 * Post xml document to the NCIP service
 	 *
 	 * @param  Request  $request
-	 * @return QuiteSimpleXMLElement
+	 * @return string
 	 */
 	public function post($request)
 	{

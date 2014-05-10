@@ -80,7 +80,7 @@ class NcipClient extends NcipService {
 	 * Check in an item
 	 *
 	 * @param  string  $item_id
-	 * @return array
+	 * @return CheckInResponse
 	 */
 	public function checkInItem($item_id)
 	{
@@ -95,7 +95,7 @@ class NcipClient extends NcipService {
 	 *
 	 * @param  string  $user_id
 	 * @param  string  $item_id
-	 * @return CheckOutResponse
+	 * @return RenewResponse
 	 */
 	public function renewItem($user_id, $item_id)
 	{
