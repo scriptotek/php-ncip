@@ -1,7 +1,12 @@
 <?php namespace Danmichaelo\Ncip;
 
-class Request {
+class Request implements RequestInterface {
 
+	/**
+	 * Check if Request is of a specific class
+	 *
+	 * @return bool
+	 */
 	public function is($kind)
 	{
 		if ($kind == 'LookupUser' && $this instanceof \Danmichaelo\Ncip\UserRequest) {
@@ -20,5 +25,15 @@ class Request {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Return XML representation of the request
+	 *
+	 * @return string
+	 */
+	public function xml()
+	{
+		return '';
 	}
 }

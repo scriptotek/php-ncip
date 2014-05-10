@@ -6,7 +6,7 @@
  * a small subset of the NCIP services.
  */
 
-class ItemRequest extends Request {
+class ItemRequest extends Request implements RequestInterface {
 
 	public $itemId;
 
@@ -22,7 +22,9 @@ class ItemRequest extends Request {
 	}
 
 	/**
-	 * Return a XML representation of the request
+	 * Return XML representation of the request
+	 *
+	 * @return string
 	 */
 	public function xml()
 	{

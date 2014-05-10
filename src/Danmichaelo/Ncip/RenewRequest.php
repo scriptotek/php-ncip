@@ -6,7 +6,7 @@
  * a small subset of the NCIP services.
  */
 
-class RenewRequest extends Request {
+class RenewRequest extends Request implements RequestInterface {
 
 	public $userId;
 	public $itemId;
@@ -25,7 +25,9 @@ class RenewRequest extends Request {
 	}
 
 	/**
-	 * Return a XML representation of the request
+	 * Return XML representation of the request
+	 *
+	 * @return string
 	 */
 	public function xml()
 	{

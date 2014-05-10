@@ -6,7 +6,7 @@
  * a small subset of the NCIP services.
  */
 
-class CheckOutRequest extends Request {
+class CheckOutRequest extends Request implements RequestInterface {
 
 	public $agencyId;
 	public $userId;
@@ -28,7 +28,9 @@ class CheckOutRequest extends Request {
 	}
 
 	/**
-	 * Return a XML representation of the request
+	 * Return XML representation of the request
+	 *
+	 * @return string
 	 */
 	public function xml()
 	{
