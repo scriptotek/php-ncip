@@ -75,32 +75,37 @@ class Response {
 	}
 
 	/**
+	 * Validate a set of arguments
+	 *
+	 * @return void
+	 */
+	public function validateArgSet($set)
+	{
+		if (isset($set)) {
+			foreach ($set as $arg) {
+				if (!isset($this->{$arg})) {
+					throw new \Exception('Response not valid: ' . $arg . ' has not been set!');
+				}
+			}
+		}
+		
+	}
+
+	/**
 	 * Validate the response
 	 *
 	 * @return void
 	 */
 	protected function validate()
 	{
-		if (isset($this->args)) {			
-			foreach ($this->args as $arg) {
-				if (!isset($this->{$arg})) {
-					throw new \Exception('Response not valid: ' . $arg . ' has not been set!');
-				}
-			}
+		$this->validateArgSet($this->args);
+
+		if ($this->success) {
+			$this->validateArgSet($this->successArgs);
 		}
-		if (isset($this->successArgs) && $this->success) {			
-			foreach ($this->successArgs as $arg) {
-				if (!isset($this->{$arg})) {
-					throw new \Exception('Response not valid: ' . $arg . ' has not been set!');
-				}
-			}
-		}
-		if (isset($this->failureArgs) && !$this->success) {			
-			foreach ($this->failureArgs as $arg) {
-				if (!isset($this->{$arg})) {
-					throw new \Exception('Response not valid: ' . $arg . ' has not been set!');
-				}
-			}
+
+		if (!$this->success) {
+			$this->validateArgSet($this->failureArgs);
 		}
 	}
 
