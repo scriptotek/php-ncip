@@ -52,10 +52,9 @@ class CheckOutResponse extends Response {
 	public $userId;
 	public $itemAgencyId;
 	public $userAgencyId;
-	public $success;
 	public $dateDue;
-	public $error;
-	public $errorDetails;
+	public $bibliographic;
+
 
 	protected $args = array('success', 'lang');
 	protected $successArgs = array('userId', 'itemId', 'userAgencyId', 'itemAgencyId', 'dateDue');

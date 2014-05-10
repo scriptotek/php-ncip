@@ -13,6 +13,8 @@ class NcipClient extends NcipService {
 
 	protected $connector;
 
+	protected $emitter;
+
 	/**
 	 * Create a new Ncip client
 	 *

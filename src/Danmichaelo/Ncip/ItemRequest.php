@@ -8,7 +8,7 @@
 
 class ItemRequest extends Request {
 
-	public $ItemIdentifierValueitemId;
+	public $itemId;
 
 	/**
 	 * Create a new Ncip item request
