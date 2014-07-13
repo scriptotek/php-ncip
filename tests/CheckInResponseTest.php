@@ -1,4 +1,4 @@
-<?php namespace Danmichaelo\Ncip;
+<?php namespace Scriptotek\Ncip;
 
 use Danmichaelo\QuiteSimpleXMLElement\QuiteSimpleXMLElement;
 
@@ -54,7 +54,7 @@ class CheckInResponseTest extends \PHPUnit_Framework_TestCase {
 		$dummy_response = new QuiteSimpleXMLElement($this->dummy_response_success);
 		$response = new CheckInResponse($dummy_response);
 
-		$this->assertInstanceOf('Danmichaelo\Ncip\CheckInResponse', $response);
+		$this->assertInstanceOf('Scriptotek\Ncip\CheckInResponse', $response);
 		$this->assertTrue($response->success);
 		$this->assertEquals('xxxxxxxxx', $response->id);
 		$this->assertEquals('q', $response->agencyId);
@@ -64,7 +64,7 @@ class CheckInResponseTest extends \PHPUnit_Framework_TestCase {
 		$dummy_response = new QuiteSimpleXMLElement($this->dummy_response_fail);
 		$response = new CheckInResponse($dummy_response);
 
-		$this->assertInstanceOf('Danmichaelo\Ncip\CheckInResponse', $response);
+		$this->assertInstanceOf('Scriptotek\Ncip\CheckInResponse', $response);
 		$this->assertFalse($response->success);
 		$this->assertEquals('Ukjent feil', $response->error);
 		$this->assertEquals('Ukjent feil.', $response->errorDetails);

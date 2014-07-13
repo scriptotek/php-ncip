@@ -1,4 +1,4 @@
-<?php namespace Danmichaelo\Ncip;
+<?php namespace Scriptotek\Ncip;
 
 use Danmichaelo\QuiteSimpleXMLElement\QuiteSimpleXMLElement;
 
@@ -43,7 +43,7 @@ class RenewResponseTest extends \PHPUnit_Framework_TestCase {
 		$response = new RenewResponse($dummy_response);
 		$date1 = new \DateTime('2013-11-11T00:30:35+01:00');
 
-		$this->assertInstanceOf('Danmichaelo\Ncip\RenewResponse', $response);
+		$this->assertInstanceOf('Scriptotek\Ncip\RenewResponse', $response);
 		$this->assertTrue($response->success);
 		$this->assertEquals($id, $response->id);
 		$this->assertEquals($date1->getTimestamp(), $response->dateDue->getTimestamp());
@@ -53,7 +53,7 @@ class RenewResponseTest extends \PHPUnit_Framework_TestCase {
 		$dummy_response = new QuiteSimpleXMLElement($this->dummy_response_fail);
 		$response = new RenewResponse($dummy_response);
 
-		$this->assertInstanceOf('Danmichaelo\Ncip\RenewResponse', $response);
+		$this->assertInstanceOf('Scriptotek\Ncip\RenewResponse', $response);
 		$this->assertFalse($response->success);
 		$this->assertEquals('Maximum renewals exceeded', $response->error);
 		$this->assertEquals('Maximum renewals exceeded.', $response->errorDetails);
@@ -62,7 +62,7 @@ class RenewResponseTest extends \PHPUnit_Framework_TestCase {
 	public function testParseNullResponse() {
 		$response = new RenewResponse(null);
 
-		$this->assertInstanceOf('Danmichaelo\Ncip\RenewResponse', $response);
+		$this->assertInstanceOf('Scriptotek\Ncip\RenewResponse', $response);
 	}
 
 	public function testXmlSuccess()

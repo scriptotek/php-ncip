@@ -2,7 +2,7 @@
     "name": "danmichaelo/ncip",
     "type": "library",
     "description": "Basic NCIP library",
-    "homepage": "http://github.com/danmichaelo/ncip",
+    "homepage": "http://github.com/scriptotek/ncip",
     "keywords": ["ncip", "laravel"],
     "authors": [
         {
@@ -25,7 +25,7 @@
     },
     "autoload": {
         "psr-0": {
-            "Danmichaelo\\Ncip\\": "src/"
+            "Scriptotek\\Ncip\\": "src/"
         }
     },
     "minimum-stability": "dev"

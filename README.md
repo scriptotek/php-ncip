@@ -1,8 +1,8 @@
 # Basic NCIP php library and Laravel package
 
-[![Build Status](https://travis-ci.org/danmichaelo/php-ncip.png?branch=master)](https://travis-ci.org/danmichaelo/php-ncip)
-[![Coverage Status](https://coveralls.io/repos/danmichaelo/php-ncip/badge.png?branch=master)](https://coveralls.io/r/danmichaelo/php-ncip?branch=master)
-[![Dependencies Status](https://depending.in/danmichaelo/php-ncip.png)](http://depending.in/danmichaelo/php-ncip)
+[![Build Status](https://travis-ci.org/scriptotek/php-ncip.png?branch=master)](https://travis-ci.org/scriptotek/php-ncip)
+[![Coverage Status](https://coveralls.io/repos/scriptotek/php-ncip/badge.png?branch=master)](https://coveralls.io/r/scriptotek/php-ncip?branch=master)
+[![Dependencies Status](https://depending.in/scriptotek/php-ncip.png)](http://depending.in/scriptotek/php-ncip)
 [![Latest Stable Version](https://poser.pugx.org/danmichaelo/ncip/v/stable.png)](https://packagist.org/packages/danmichaelo/ncip)
 [![Total Downloads](https://poser.pugx.org/danmichaelo/ncip/downloads.png)](https://packagist.org/packages/danmichaelo/ncip)
 [![License](https://poser.pugx.org/danmichaelo/ncip/license.png)](https://packagist.org/packages/danmichaelo/ncip)
@@ -30,7 +30,7 @@ and run `composer install` to get the latest version of the package.
 
 The package comes with a Laravel 4 service provider that you can install if you like. It comes with a config file, so you can set settings there instead of passing them to the constructor.
 
-To register the service provider, add `'Danmichaelo\NcipServiceProvider',` to the list of `providers` in `app/config/app.php`. Then run `php artisan config:publish danmichaelo/ncip` in your terminal to create the config file `app/config/packages/danmichael/ncip/config.php`.
+To register the service provider, add `'Scriptotek\NcipServiceProvider',` to the list of `providers` in `app/config/app.php`. Then run `php artisan config:publish danmichaelo/ncip` in your terminal to create the config file `app/config/packages/danmichael/ncip/config.php`.
 
 ## Usage:
 
@@ -40,8 +40,8 @@ To construct a client, you need to specify the url to the NCIP srvice, a freely 
 
 ```php
 require_once('vendor/autoload.php');
-use Danmichaelo\Ncip\NcipConnector,
-    Danmichaelo\Ncip\NcipClient;
+use Scriptotek\Ncip\NcipConnector,
+    Scriptotek\Ncip\NcipClient;
 
 $ncipUrl = 'http://eksempel.com/NCIPResponder';
 $userAgent = 'My NCIP client/0.1';
@@ -55,7 +55,7 @@ To construct a server:
 
 ```php
 require_once('vendor/autoload.php');
-use Danmichaelo\Ncip\NcipServer;
+use Scriptotek\Ncip\NcipServer;
 
 $server = new NcipServer;
 ```

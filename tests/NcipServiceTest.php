@@ -1,4 +1,4 @@
-<?php namespace Danmichaelo\Ncip;
+<?php namespace Scriptotek\Ncip;
 
 class NcipServiceTest extends \PHPUnit_Framework_TestCase {
 

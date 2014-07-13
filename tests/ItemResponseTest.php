@@ -1,4 +1,4 @@
-<?php namespace Danmichaelo\Ncip;
+<?php namespace Scriptotek\Ncip;
 
 use Danmichaelo\QuiteSimpleXMLElement\QuiteSimpleXMLElement;
 
@@ -111,7 +111,7 @@ class ItemResponseTest extends \PHPUnit_Framework_TestCase {
 		$response = new ItemResponse($xml);
 		$date1 = new \DateTime('2013-09-30T19:32:39+02:00');
 
-		$this->assertInstanceOf('Danmichaelo\Ncip\ItemResponse', $response);
+		$this->assertInstanceOf('Scriptotek\Ncip\ItemResponse', $response);
 		$this->assertTrue($response->exists);
 		$this->assertEquals('q', $response->agencyId);
 		$this->assertEquals('xxxxxxxxx', $response->itemId);
@@ -125,7 +125,7 @@ class ItemResponseTest extends \PHPUnit_Framework_TestCase {
 		$xml = new QuiteSimpleXMLElement($this->dummy_response_available);
 		$response = new ItemResponse($xml);
 
-		$this->assertInstanceOf('Danmichaelo\Ncip\ItemResponse', $response);
+		$this->assertInstanceOf('Scriptotek\Ncip\ItemResponse', $response);
 		$this->assertTrue($response->exists);
 		$this->assertEquals('q', $response->agencyId);
 		$this->assertEquals('xxxxxxxxx', $response->itemId);

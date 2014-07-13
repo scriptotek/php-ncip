@@ -1,4 +1,4 @@
-<?php namespace Danmichaelo\Ncip;
+<?php namespace Scriptotek\Ncip;
 
 class Request implements RequestInterface {
 
@@ -10,11 +10,11 @@ class Request implements RequestInterface {
 	public function is($kind)
 	{
 		$classes = array(
-			'LookupUser' => 'Danmichaelo\Ncip\UserRequest',
-			'LookupItem' => 'Danmichaelo\Ncip\ItemRequest',
-			'CheckOutItem' => 'Danmichaelo\Ncip\CheckOutRequest',
-			'CheckInItem' => 'Danmichaelo\Ncip\CheckInRequest',
-			'RenewItem' => 'Danmichaelo\Ncip\RenewRequest',
+			'LookupUser' => 'Scriptotek\Ncip\UserRequest',
+			'LookupItem' => 'Scriptotek\Ncip\ItemRequest',
+			'CheckOutItem' => 'Scriptotek\Ncip\CheckOutRequest',
+			'CheckInItem' => 'Scriptotek\Ncip\CheckInRequest',
+			'RenewItem' => 'Scriptotek\Ncip\RenewRequest',
 		);
 		return $this instanceof $classes[$kind];
 	}

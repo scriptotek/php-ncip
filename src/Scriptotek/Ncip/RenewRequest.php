@@ -1,4 +1,4 @@
-<?php namespace Danmichaelo\Ncip;
+<?php namespace Scriptotek\Ncip;
 /*
  * (c) Dan Michael O. Heggø (2013)
  *
@@ -6,18 +6,21 @@
  * a small subset of the NCIP services.
  */
 
-class ItemRequest extends Request implements RequestInterface {
+class RenewRequest extends Request implements RequestInterface {
 
+	public $userId;
 	public $itemId;
 
 	/**
-	 * Create a new Ncip item request
+	 * Create a new Ncip renew request
 	 *
+	 * @param  string  $userId
 	 * @param  string  $itemId
 	 * @return void
 	 */
-	public function __construct($itemId)
+	public function __construct($userId, $itemId)
 	{
+		$this->userId = $userId;
 		$this->itemId = $itemId;
 	}
 
@@ -30,12 +33,16 @@ class ItemRequest extends Request implements RequestInterface {
 	{
 		return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 			<ns1:NCIPMessage xmlns:ns1="http://www.niso.org/2008/ncip" ns1:version="http://www.niso.org/schemas/ncip/v2_01/ncip_v2_01.xsd">
-				<ns1:LookupItem>
+				<ns1:RenewItem>
+					<ns1:AuthenticationInput>
+						<ns1:AuthenticationInputData>' . $this->userId . '</ns1:AuthenticationInputData>
+						<ns1:AuthenticationDataFormatType>text</ns1:AuthenticationDataFormatType>
+						<ns1:AuthenticationInputType>User Id</ns1:AuthenticationInputType>
+					</ns1:AuthenticationInput>
 					<ns1:ItemId>
-					   <ns1:ItemIdentifierType>Accession Number</ns1:ItemIdentifierType>
 					   <ns1:ItemIdentifierValue>' . $this->itemId . '</ns1:ItemIdentifierValue>
 					</ns1:ItemId>
-				</ns1:LookupItem>
+				</ns1:RenewItem>
 			</ns1:NCIPMessage>';
 	}
 

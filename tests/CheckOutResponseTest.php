@@ -1,4 +1,4 @@
-<?php namespace Danmichaelo\Ncip;
+<?php namespace Scriptotek\Ncip;
 
 use Danmichaelo\QuiteSimpleXMLElement\QuiteSimpleXMLElement;
 
@@ -58,7 +58,7 @@ class CheckOutResponseTest extends \PHPUnit_Framework_TestCase {
 		$response = new CheckOutResponse($dummy_response);
 		$date1 = new \DateTime('2013-09-21T18:54:39+02:00');
 
-		$this->assertInstanceOf('Danmichaelo\Ncip\CheckOutResponse', $response);
+		$this->assertInstanceOf('Scriptotek\Ncip\CheckOutResponse', $response);
 		$this->assertTrue($response->success);
 		$this->assertEquals($date1->getTimestamp(), $response->dateDue->getTimestamp());
 		$this->assertEquals('Learning SPARQL : querying and updating with SPARQL 1.1', $response->bibliographic['title']);
@@ -70,7 +70,7 @@ class CheckOutResponseTest extends \PHPUnit_Framework_TestCase {
 		$dummy_response = new QuiteSimpleXMLElement($this->dummy_response_fail);
 		$response = new CheckOutResponse($dummy_response);
 
-		$this->assertInstanceOf('Danmichaelo\Ncip\CheckOutResponse', $response);
+		$this->assertInstanceOf('Scriptotek\Ncip\CheckOutResponse', $response);
 		$this->assertFalse($response->success);
 		$this->assertEquals('Item does not circulate', $response->error);
 		$this->assertEquals('LTID:Finnes ikke', $response->errorDetails);
@@ -79,7 +79,7 @@ class CheckOutResponseTest extends \PHPUnit_Framework_TestCase {
 	public function testParseNullResponse() {
 		$response = new CheckOutResponse(null);
 
-		$this->assertInstanceOf('Danmichaelo\Ncip\CheckOutResponse', $response);
+		$this->assertInstanceOf('Scriptotek\Ncip\CheckOutResponse', $response);
 	}
 
 	public function testXmlSuccess()

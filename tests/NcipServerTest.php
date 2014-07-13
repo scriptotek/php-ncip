@@ -1,4 +1,4 @@
-<?php namespace Danmichaelo\Ncip;
+<?php namespace Scriptotek\Ncip;
 
 use Mockery as m;
 
@@ -25,7 +25,7 @@ class NcipServerTest extends \PHPUnit_Framework_TestCase {
 				</ns1:LookupUser>
 			</ns1:NCIPMessage>');
 
-		$this->assertInstanceOf('Danmichaelo\Ncip\UserRequest', $request);
+		$this->assertInstanceOf('Scriptotek\Ncip\UserRequest', $request);
 		$this->assertTrue($request->is('LookupUser'));
 		$this->assertEquals($userId, $request->userId);
 	}
@@ -42,7 +42,7 @@ class NcipServerTest extends \PHPUnit_Framework_TestCase {
 				</ns1:LookupItem>
 			</ns1:NCIPMessage>');
 
-		$this->assertInstanceOf('Danmichaelo\Ncip\ItemRequest', $request);
+		$this->assertInstanceOf('Scriptotek\Ncip\ItemRequest', $request);
 		$this->assertTrue($request->is('LookupItem'));
 		$this->assertEquals($itemId, $request->itemId);
 	}
@@ -64,7 +64,7 @@ class NcipServerTest extends \PHPUnit_Framework_TestCase {
 				</ns1:RenewItem>
 			</ns1:NCIPMessage>');
 
-		$this->assertInstanceOf('Danmichaelo\Ncip\RenewRequest', $request);
+		$this->assertInstanceOf('Scriptotek\Ncip\RenewRequest', $request);
 		$this->assertTrue($request->is('RenewItem'));
 		$this->assertEquals($userId, $request->userId);
 		$this->assertEquals($itemId, $request->itemId);
@@ -87,7 +87,7 @@ class NcipServerTest extends \PHPUnit_Framework_TestCase {
 				</ns1:CheckOutItem>
 			</ns1:NCIPMessage>');
 
-		$this->assertInstanceOf('Danmichaelo\Ncip\CheckOutRequest', $request);
+		$this->assertInstanceOf('Scriptotek\Ncip\CheckOutRequest', $request);
 		$this->assertTrue($request->is('CheckOutItem'));
 		$this->assertEquals($agencyId, $request->agencyId);
 		$this->assertEquals($userId, $request->userId);
@@ -107,14 +107,14 @@ class NcipServerTest extends \PHPUnit_Framework_TestCase {
 				</ns1:CheckInItem>
 			</ns1:NCIPMessage>');
 
-		$this->assertInstanceOf('Danmichaelo\Ncip\CheckInRequest', $request);
+		$this->assertInstanceOf('Scriptotek\Ncip\CheckInRequest', $request);
 		$this->assertTrue($request->is('CheckInItem'));
 		$this->assertEquals($agencyId, $request->agencyId);
 		$this->assertEquals($itemId, $request->itemId);
 	}
 
 	/**
-     * @expectedException Danmichaelo\Ncip\InvalidNcipRequestException
+     * @expectedException Scriptotek\Ncip\InvalidNcipRequestException
      */
 	public function testInvalidRequestName() {
 		$itemId = 'doc0000001';
@@ -129,7 +129,7 @@ class NcipServerTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-     * @expectedException Danmichaelo\Ncip\InvalidNcipRequestException
+     * @expectedException Scriptotek\Ncip\InvalidNcipRequestException
      */
 	public function testInvalidMessageContainer() {
 		$request = $this->server->parseRequest('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -138,7 +138,7 @@ class NcipServerTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-     * @expectedException Danmichaelo\Ncip\InvalidNcipRequestException
+     * @expectedException Scriptotek\Ncip\InvalidNcipRequestException
      */
 	public function testNoRequest() {
 		$request = $this->server->parseRequest('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>

@@ -1,4 +1,4 @@
-<?php namespace Danmichaelo\Ncip;
+<?php namespace Scriptotek\Ncip;
 
 use Mockery as m;
 
@@ -13,7 +13,7 @@ class NcipClientTest extends \PHPUnit_Framework_TestCase {
 
 	public function setUpMock($xml_response)
 	{
-		$mock = m::mock('Danmichaelo\Ncip\NcipConnector');
+		$mock = m::mock('Scriptotek\Ncip\NcipConnector');
 		$mock->shouldReceive('post')
 			->once()
 			->andReturn($xml_response);
@@ -100,14 +100,14 @@ class NcipClientTest extends \PHPUnit_Framework_TestCase {
 
 		$response = $this->ncip->lookupUser('test123456');
 
-		$this->assertInstanceOf('Danmichaelo\Ncip\UserResponse', $response);
+		$this->assertInstanceOf('Scriptotek\Ncip\UserResponse', $response);
 		$this->assertEquals('Donald', $response->firstName);
 
 	}
 
 
 	/**
- 	 * @expectedException Danmichaelo\Ncip\InvalidNcipResponseException
+ 	 * @expectedException Scriptotek\Ncip\InvalidNcipResponseException
  	 */
 	public function testInvalidResponse() {
 		$this->setupMock('
