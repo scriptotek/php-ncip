@@ -1,6 +1,7 @@
-<?php namespace Scriptotek\Ncip;
+<?php namespace Scriptotek\Ncip\Test;
 
 use Danmichaelo\QuiteSimpleXMLElement\QuiteSimpleXMLElement;
+use Scriptotek\Ncip\CheckInRequest;
 
 
 class CheckInRequestTest extends \PHPUnit_Framework_TestCase {

@@ -1,6 +1,8 @@
-<?php namespace Scriptotek\Ncip;
+<?php namespace Scriptotek\Ncip\Test;
 
 use Danmichaelo\QuiteSimpleXMLElement\QuiteSimpleXMLElement;
+use Scriptotek\Ncip\RenewResponse;
+
 
 class RenewResponseTest extends \PHPUnit_Framework_TestCase {
 
