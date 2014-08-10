@@ -40,4 +40,31 @@ class NcipClientTest extends TestCase {
 		$response = $this->ncip->lookupUser('test123456');
 	}
 
+	public function testEvents()
+	{
+		$u = 'Mr. Nelson';
+		$i = 'Unit testing decoded';
+		$this->conn->shouldReceive('post')
+			->once()
+			->andReturn($this->dummyCheckoutResponse(array(
+				'userId' => $u,
+				'itemId' => $i,
+			  ))->xml());
+
+		$listenerCalled = 0;
+		$receivedUserId = '';
+		$receivedItemId = '';
+		$this->ncip->on('request.checkout', function($userId, $itemId) use (&$listenerCalled, &$receivedUserId, &$receivedItemId) {
+			$listenerCalled++;
+			$receivedUserId = $userId;
+			$receivedItemId = $itemId;
+		});
+
+		$this->assertEquals(0, $listenerCalled);
+		$this->ncip->checkOutItem($u, $i);
+        $this->assertEquals(1, $listenerCalled);
+        $this->assertEquals($u, $receivedUserId);
+        $this->assertEquals($i, $receivedItemId);
+	}
+
 }

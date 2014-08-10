@@ -7,8 +7,9 @@
  */
 
 use Danmichaelo\QuiteSimpleXMLElement\QuiteSimpleXMLElement;
+use Evenement\EventEmitter;
 
-class NcipService {
+class NcipService extends EventEmitter {
 
 	public $namespaces;
 

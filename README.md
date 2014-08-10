@@ -101,3 +101,13 @@ if ($request->is('LookupUser')) {
 }
 ```
 
+### Events:
+
+The client emits events on each request to the server. This can be useful to implement logging.
+The events are `request.item`, `request.user`, `request.checkout`, `request.checkin` and `request.renew`.
+
+```php
+$client->on('request.checkout', function($userId, $itemId) {
+	$log->addInfo('Requested checkout of item "' . $itemId . '" for user "' . $userId . '"');
+}
+```
