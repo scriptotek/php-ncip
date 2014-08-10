@@ -1,6 +1,8 @@
-<?php namespace Scriptotek\Ncip;
+<?php namespace Scriptotek\Ncip\Test;
 
 use Mockery as m;
+use Scriptotek\Ncip\NcipServer;
+
 
 class NcipServerTest extends \PHPUnit_Framework_TestCase {
 

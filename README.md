@@ -1,11 +1,10 @@
 # Basic NCIP php library and Laravel package
 
-[![Build Status](https://travis-ci.org/scriptotek/php-ncip.png?branch=master)](https://travis-ci.org/scriptotek/php-ncip)
-[![Coverage Status](https://coveralls.io/repos/scriptotek/php-ncip/badge.png?branch=master)](https://coveralls.io/r/scriptotek/php-ncip?branch=master)
-[![Dependencies Status](https://depending.in/scriptotek/php-ncip.png)](http://depending.in/scriptotek/php-ncip)
-[![Latest Stable Version](https://poser.pugx.org/danmichaelo/ncip/v/stable.png)](https://packagist.org/packages/danmichaelo/ncip)
-[![Total Downloads](https://poser.pugx.org/danmichaelo/ncip/downloads.png)](https://packagist.org/packages/danmichaelo/ncip)
-[![License](https://poser.pugx.org/danmichaelo/ncip/license.png)](https://packagist.org/packages/danmichaelo/ncip)
+[![Build Status](http://img.shields.io/travis/scriptotek/php-ncip.svg?style=flat)](https://travis-ci.org/scriptotek/php-ncip)
+[![Coverage Status](http://img.shields.io/coveralls/scriptotek/php-ncip.svg?style=flat)](https://coveralls.io/r/scriptotek/php-ncip?branch=master)
+[![Latest Stable Version](http://img.shields.io/packagist/v/danmichaelo/ncip.svg?style=flat)](https://packagist.org/packages/danmichaelo/ncip)
+[![Total Downloads](http://img.shields.io/packagist/dt/danmichaelo/ncip.svg?style=flat)](https://packagist.org/packages/danmichaelo/ncip)
+[![License](http://img.shields.io/packagist/l/danmichaelo/ncip.svg?style=flat)](https://packagist.org/packages/danmichaelo/ncip)
 
 
 **php-ncip** is a php package for parsing and formatting NCIP request and response messages. Development has been guided by a desire for a simple API rather than a complete one. Only a small subset of the NCIP specification is currently covered, but suggestions for additions are welcome.
@@ -101,3 +100,13 @@ if ($request->is('LookupUser')) {
 }
 ```
 
+### Events:
+
+The client emits events on each request to the server. This can be useful to implement logging.
+The events are `request.item`, `request.user`, `request.checkout`, `request.checkin` and `request.renew`.
+
+```php
+$client->on('request.checkout', function($userId, $itemId) {
+	$log->addInfo('Requested checkout of item "' . $itemId . '" for user "' . $userId . '"');
+}
+```
