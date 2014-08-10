@@ -37,12 +37,13 @@ class NcipClient extends NcipService {
 	 */
 	public function post(Request $request)
 	{
+		$response = $this->connector->post($request);
 		try {
-			return $this->parseXml($this->connector->post($request));
+			return $this->parseXml($response);
 		} catch (InvalidXMLException $e) {
 			throw new InvalidNcipResponseException(
-				'Invalid response received from the NCIP service ' . '"' .
-				$this->connector->url . '". Did you configure it correctly?'
+				'Invalid response received from the NCIP service "' .
+				$this->connector->url . '": ' . $response
 			);
 		}
 	}
