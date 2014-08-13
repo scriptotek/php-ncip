@@ -33,7 +33,10 @@ class NcipClient extends NcipService {
 	 */
 	public function post(Request $request)
 	{
+		$this->emit('message.send', array($request->xml()));
 		$response = $this->connector->post($request);
+		$this->emit('message.recv', array($response));
+
 		try {
 			return $this->parseXml($response);
 		} catch (InvalidXMLException $e) {

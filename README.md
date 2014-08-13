@@ -110,3 +110,15 @@ $client->on('request.checkout', function($userId, $itemId) {
 	$log->addInfo('Requested checkout of item "' . $itemId . '" for user "' . $userId . '"');
 }
 ```
+
+For debugging, events `message.send` and `message.recv` are emitted on each message sent to and received
+from the server. The message xml body is given as the first argument.
+
+```php
+$client->on('message.send', function($msg) {
+	printf("[SEND] %s\n", $msg);
+}
+$client->on('message.recv', function($msg) {
+	printf("[RECV] %s\n", $msg);
+}
+```
