@@ -35,7 +35,16 @@ class NcipServiceProvider extends ServiceProvider {
 				$app['config']['ncip::user_agent'],
 				$app['config']['ncip::agency_id']
 			);
-			return new NcipClient($conn);
+			$cli = new NcipClient($conn);
+			if (array_get($app['config'], 'ncip::debug', false)) {
+				$cli->on('message.send', function($msg) {
+					Log::debug('[NCIP SEND] ' . $msg);
+				});
+				$cli->on('message.recv', function($msg) {
+					Log::debug('[NCIP RECV] ' . $msg);
+				});
+			}
+			return $cli;
 		});
 
 		$this->app['ncip.server'] = $this->app->share(function($app)

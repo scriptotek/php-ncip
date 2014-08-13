@@ -35,6 +35,17 @@ return array(
 	|
 	*/
 
-	'user_agent' => null
+	'user_agent' => null,
+
+	/*
+	|--------------------------------------------------------------------------
+	| Debug
+	|--------------------------------------------------------------------------
+	|
+	| Set to true to log all raw xml messages sent to and from the NCIP server.
+	|
+	*/
+
+	'debug' => false,
 
 );
