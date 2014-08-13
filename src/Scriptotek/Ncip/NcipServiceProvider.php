@@ -38,10 +38,10 @@ class NcipServiceProvider extends ServiceProvider {
 			$cli = new NcipClient($conn);
 			if (array_get($app['config'], 'ncip::debug', false)) {
 				$cli->on('message.send', function($msg) {
-					Log::debug('[NCIP SEND] ' . $msg);
+					\Log::debug('[NCIP SEND] ' . $msg);
 				});
 				$cli->on('message.recv', function($msg) {
-					Log::debug('[NCIP RECV] ' . $msg);
+					\Log::debug('[NCIP RECV] ' . $msg);
 				});
 			}
 			return $cli;
