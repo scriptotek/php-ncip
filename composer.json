@@ -1,7 +1,7 @@
 {
-    "name": "danmichaelo/ncip",
+    "name": "rzgairin/ncip",
     "type": "library",
-    "description": "Basic NCIP library",
+    "description": "Basic NCIP library forked danmichaelo@gmail.com",
     "homepage": "http://github.com/scriptotek/php-ncip",
     "keywords": ["ncip", "laravel"],
     "authors": [
