@@ -1,7 +1,7 @@
 {
-    "name": "danmichaelo/ncip",
+    "name": "rzgairin/ncip",
     "type": "library",
-    "description": "Basic NCIP library",
+    "description": "Basic NCIP library forked danmichaelo@gmail.com",
     "homepage": "http://github.com/scriptotek/php-ncip",
     "keywords": ["ncip", "laravel"],
     "authors": [
@@ -13,9 +13,9 @@
     "license": "MIT",
     "require": {
         "php": ">=5.3.0",
-        "danmichaelo/quitesimplexmlelement": "~0.2.0",
+        "danmichaelo/quitesimplexmlelement": "~1.0.2",
         "illuminate/support": "~4.1.0",
-        "nesbot/Carbon": "~1.8.0",
+        "nesbot/Carbon": "~2.5.3",
         "evenement/evenement": "1.0.*"
     },
     "require-dev": {
