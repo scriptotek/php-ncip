@@ -15,7 +15,7 @@
         "php": ">=5.3.0",
         "danmichaelo/quitesimplexmlelement": "~1.0.2",
         "illuminate/support": "~4.1.0",
-        "nesbot/Carbon": "~1.8.0",
+        "nesbot/Carbon": "~2.5.3",
         "evenement/evenement": "1.0.*"
     },
     "require-dev": {
